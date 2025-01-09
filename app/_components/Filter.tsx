@@ -1,14 +1,29 @@
-import React from "react";
+"use client";
 
-type Props = {};
+import React, { useState } from "react";
 
-function Filter({}: Props) {
+type Props = {
+  filterName?: string[];
+};
+
+function Filter({ filterName = ["Today", "Week"] }: Props) {
+  const [activeFilter, setActiveFilter] = useState(0);
+
   return (
-    <div className="flex items-center h-full text-base border rounded-full cursor-pointer bg-gradient">
-      <div className="border bg-opt-gradient rounded-full h-full py-1 px-5">
-        Today
-      </div>
-      <div className="py-1 px-5">Week</div>
+    <div className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap">
+      {filterName?.map((filter, index) => (
+        <div
+          key={index}
+          className={
+            activeFilter === index
+              ? "border bg-opt-gradient text-nowrap rounded-full h-full text-light-50 scale-105 py-1 px-5"
+              : "py-1 px-5 text-light-50/70 hover:text-light-50"
+          }
+          onClick={() => setActiveFilter(index)}
+        >
+          {filter}
+        </div>
+      ))}
     </div>
   );
 }

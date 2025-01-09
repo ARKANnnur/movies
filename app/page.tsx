@@ -1,17 +1,21 @@
 import React, { Suspense } from "react";
-import Slider from "@/app/_components/Slider";
+import Slider from "@/_components/Slider";
 import Type from "./_components/Type";
-import Loading from "@/app/loading";
+import Loading from "@/loading";
 
 type Props = {
   searchParams: any;
 };
 
-function page({}: Props) {
+function Page({}: Props) {
   return (
     <div className="">
       <Slider />
       <Suspense fallback={<Loading />}>
+        <Type
+          filterName={["Movie", "K-drama", "C-drama", "Anime", "Cartoon"]}
+          size="w-[30rem] h-72"
+        />
         <Type title="Trending" />
         <Type title="Popular" />
       </Suspense>
@@ -19,4 +23,4 @@ function page({}: Props) {
   );
 }
 
-export default page;
+export default Page;

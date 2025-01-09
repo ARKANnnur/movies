@@ -1,6 +1,6 @@
-import Navbar from "@/app/_components/Navbar";
+import Navbar from "@/_components/Navbar";
 import { Playfair_Display, Roboto } from "next/font/google";
-import "@/app/_styles/globals.css";
+import "@/_styles/globals.css";
 
 // const playfairDisplay = Playfair_Display({
 //   subsets: ["latin"],
