@@ -48,3 +48,7 @@ The table below gives an overview of the technologies used in this project, as w
 | Prettier      | [Website](https://prettier.io/) - [Docs](https://prettier.io/docs/en/index.html) - [Options](https://prettier.io/docs/en/options.html) - [GitHub](https://github.com/prettier/prettier)                         |
 | npm           | [Website](https://www.npmjs.com/) - [Docs](https://docs.npmjs.com/) - [GitHub](https://github.com/npm/cli)                                                                                                      |
 | Vercel        | [Website](https://vercel.com/) - [Docs](https://vercel.com/docs) - [CLI Docs](https://vercel.com/docs/cli)                                                                                                      |
+
+
+'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1'
+https://developer.themoviedb.org/reference/search-movie

@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import React, { useEffect, useState } from "react";
 import { Playfair_Display } from "next/font/google";
 import Link from "next/link";
+import Search from "@/_components//Search";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -46,11 +47,7 @@ function Navbar({}: Props) {
           <Link href={"/"}>Movies</Link>
         </li>
         <li className="sm:grow justify-start sm:justify-center flex items-center">
-          <input
-            type="text"
-            className="w-full sm:w-1/2 bg-transparent border-b border-b-light-50 border-opacity-45 focus:border-opacity-100 focus:outline-none text-left"
-            placeholder="Search movie"
-          />
+          <Search />
         </li>
         <li className="">
           <ul className="sm:flex gap-5 text-lg ">
