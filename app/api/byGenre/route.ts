@@ -6,10 +6,11 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("by") || "";
+  const type = searchParams.get("type") ?? "movie";
 
   try {
-    let genreId = search; // Default pakai search langsung
-    const isNumber = /^\d+$/.test(search); // Cek apakah angka (lebih optimal)
+    let genreId = search;
+    const isNumber = /^\d+$/.test(search); // check search is number or string
 
     if (!isNumber) {
       const genreRes = await fetch("http://localhost:3000/api/genre");
@@ -31,7 +32,7 @@ export async function GET(request: Request) {
     }
 
     const res = await fetch(
-      `${baseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}&vote_average.gte=7`,
+      `${baseUrl}/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}&vote_average.gte=7`,
       {
         headers: {
           accept: "application/json",
@@ -53,6 +54,7 @@ export async function GET(request: Request) {
         overview: string;
         poster_path: string;
         release_date: string;
+        first_air_date: string;
         vote_average: number;
         genre_ids: number[];
       }) => ({
@@ -60,8 +62,8 @@ export async function GET(request: Request) {
         title: movie.title ? movie.title : movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
-        releaseDate: movie.release_date,
-        rating: movie.vote_average,
+        releaseDate: movie.release_date ? movie.release_date : movie.first_air_date,
+        rating: Math.round(movie.vote_average),
         genre: movie.genre_ids,
       })
     );

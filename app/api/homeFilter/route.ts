@@ -33,7 +33,6 @@ export async function GET(request: Request) {
       (movie: {
         id: number;
         title: string;
-        name: string;
         overview: string;
         poster_path: string;
         release_date: string;
@@ -41,11 +40,11 @@ export async function GET(request: Request) {
         genre_ids: number[];
       }) => ({
         id: movie.id,
-        title: movie.title ? movie.title : movie.name,
+        title: movie.title,
         overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.release_date,
-        rating: movie.vote_average,
+        rating: Math.round(movie.vote_average),
         genre: movie.genre_ids,
       })
     );

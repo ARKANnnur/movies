@@ -9,6 +9,7 @@ import Image from "next/image";
 import Genre from "@/_components/Genre";
 import textLimit from "@/_utils/textLimit";
 import Loading from "@/loading";
+import Link from "next/link";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ function Slider() {
     else if (countData > middle) decrease();
   };
 
+  // swipe function
   const handlers = useSwipeable({
     onSwipedLeft: increase,
     onSwipedRight: decrease,
@@ -73,57 +75,58 @@ function Slider() {
         <Loading />
       ) : (
         <>
-          <AnimatePresence>
+          <Link href={`/movie/${moviesData[countData]?.id}`}>
+            <AnimatePresence>
+              <motion.div
+                key={moviesData[countData]?.poster}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                {moviesData.map((movie: any, index) => (
+                  <Image
+                    key={movie.title}
+                    src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
+                    alt={movie?.title}
+                    layout="fill"
+                    draggable="false"
+                    className={`bg-slider object-cover absolute top-full ${
+                      index === countData ? "z-10" : "z-0 opacity-0"
+                    }`}
+                  />
+                ))}
+              </motion.div>
+            </AnimatePresence>
+
             <motion.div
-              key={moviesData[countData]?.poster}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              key={countData}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="absolute inset-0"
+              className="absolute bottom-0 left-0 px-5 pl-10 py-2 md:w-1/2 lg:w-1/3 space-y-2 text-base z-20"
             >
-              {moviesData.map((movie: any, index) => (
-                <Image
-                  key={movie.title}
-                  src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
-                  alt={movie?.title}
-                  layout="fill"
-                  draggable="false"
-                  className={`bg-slider object-cover absolute top-full ${
-                    index === countData ? "z-10" : "z-0 opacity-0"
-                  }`}
-                />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          <motion.div
-            key={countData}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="absolute bottom-0 left-0 px-5 pl-10 py-2 md:w-1/2 lg:w-1/3 space-y-2 text-base z-20"
-          >
-            <h1 className={`${playfairDisplay.className} text-4xl`}>
-              {moviesData[countData]?.title}
-            </h1>
-            <div className="flex gap-2 text-sm font-medium">
-              <p className="flex gap-1 items-center">
-                {Math.round(moviesData[countData].rating)}
-                <span>
-                  <FaStar className="h-3 w-3 text-light-500" />
-                </span>
+              <h1 className={`${playfairDisplay.className} text-4xl`}>
+                {moviesData[countData]?.title}
+              </h1>
+              <div className="flex gap-2 text-sm font-medium">
+                <p className="flex gap-1 items-center">
+                  {moviesData[countData]?.rating}
+                  <span>
+                    <FaStar className="h-3 w-3 text-light-500" />
+                  </span>
+                </p>
+                <span>|</span>
+                <p>{moviesData[countData].releaseDate}</p>
+              </div>
+              <Genre genreId={moviesData[countData].genre} />
+              <p className="text-sm">
+                {textLimit(moviesData[countData]?.overview)}
               </p>
-              <span>|</span>
-              <p>{moviesData[countData].releaseDate}</p>
-            </div>
-            <Genre genreId={moviesData[countData].genre} />
-            <p className="text-sm">
-              {textLimit(moviesData[countData]?.overview)}
-            </p>
-          </motion.div>
-
+            </motion.div>
+          </Link>
           <div className="absolute bottom-1/3 sm:bottom-0 w-full h-10 flex justify-center items-center gap-5 z-20">
             <Button key="button-decrease" onClick={decrease} />
             <Button key="button-middleCrease" onClick={middleCrease} />

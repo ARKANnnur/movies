@@ -23,7 +23,6 @@ export async function GET(request: Request) {
     const filterData = data.results.map(
       (movie: {
         id: number;
-        title: string;
         name: string;
         overview: string;
         poster_path: string;
@@ -32,11 +31,11 @@ export async function GET(request: Request) {
         genre_ids: number[];
       }) => ({
         id: movie.id,
-        title: movie.title ? movie.title : movie.name,
+        name: movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.first_air_date,
-        rating: movie.vote_average,
+        rating: Math.round(movie.vote_average),
         genre: movie.genre_ids,
       })
     );

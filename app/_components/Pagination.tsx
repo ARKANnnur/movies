@@ -6,6 +6,9 @@ import Types from "./Types";
 
 type Props = {};
 
+// Number 3 for Movie
+// Number 5 for Series(TV)
+
 const dataPaginations = [
   {
     filterBy: [
@@ -27,12 +30,27 @@ const dataPaginations = [
       },
     ],
   },
-  { title: "Movie" },
-  { title: "Series" },
-  { title: "Science Fiction" },
-  { title: "Fantasy" },
-  { title: "Horror" },
-  { title: "Thriller" },
+  {
+    title: "Movie",
+    filterBy: [
+      { code: "day", name: "Today" },
+      { code: "week", name: "Week" },
+    ],
+  },
+  { title: "Science Fiction 3" },
+  { title: "Fantasy 3" },
+  { title: "Horror 3" },
+  { title: "Thriller 3" },
+  {
+    title: "Series",
+    filterBy: [
+      { code: "day", name: "Today" },
+      { code: "week", name: "Week" },
+    ],
+  },
+  { title: "Comedy 5" },
+  { title: "Documentary 5" },
+  { title: "Mystery 5" },
 ];
 
 const ITEMS_PER_PAGE = 2;
@@ -53,7 +71,13 @@ export default function Pagination({}: Props) {
   return (
     <>
       {currentData?.map((data) =>
-        data.filterBy ? (
+        data.filterBy && data.title ? (
+          <Types
+            key={data.filterBy[0].name}
+            filterName={data.filterBy}
+            title={data.title}
+          />
+        ) : data.filterBy ? (
           <Types key={data.filterBy[0].name} filterName={data.filterBy} />
         ) : (
           <Types key={data.title} title={data.title} />

@@ -24,6 +24,7 @@ const playfairDisplay = Playfair_Display({
 type Movie = {
   id: number;
   title: string;
+  name: string;
   overview: string;
   genre: number;
   rating: number;
@@ -53,25 +54,29 @@ type MovieListProps = {
   children: ReactNode;
 };
 
-// 1️⃣ **MovieList (Komponen Utama)**
-function MovieList({
-  title,
-  filterName = [
-    { code: "day", name: "Today" },
-    { code: "week", name: "Week" },
-  ],
-  children,
-}: MovieListProps) {
-  const [isLoading, setIsLoading] = useState(true);
+// 1️⃣ **MovieList (Main Component)**
+function MovieList({ title, filterName = [], children }: MovieListProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataTrending, setDataTrending] = useState<Movie[]>([]);
-  const [filterPick, setFilterPick] = useState(filterName[0]?.code || "day");
+  const [filterPick, setFilterPick] = useState<string>(
+    filterName[0]?.code ?? "day"
+  );
+
+  // Number 3 for Movie
+  // Number 5 for Series(TV)
+  const convertTitle = title?.match(/[a-zA-Z]+/g)?.join(" ") || ""; // get letter
+  const number = Number(title?.match(/\d+/)?.[0]) || 0; // get number
+  const converType = number == 3 ? "movie" : "tv";
+
   let types: any;
-  if (!title) types = `http://localhost:3000/api/homeFilter?by=${filterPick}`;
-  else if (title === "Movie")
+  if (!convertTitle)
+    types = `http://localhost:3000/api/homeFilter?by=${filterPick}`;
+  else if (convertTitle === "Movie")
     types = `http://localhost:3000/api/trendingMovie?by=${filterPick}`;
-  else if (title === "Series")
+  else if (convertTitle === "Series")
     types = `http://localhost:3000/api/trendingTv?by=${filterPick}`;
-  else types = `http://localhost:3000/api/byGenre?by=${title}`;
+  else
+    types = `http://localhost:3000/api/byGenre?by=${convertTitle}&type=${converType}`;
 
   useEffect(
     function () {
@@ -98,7 +103,7 @@ function MovieList({
       value={{
         dataTrending,
         isLoading,
-        title,
+        title: convertTitle,
         filterName,
         filterPick,
         setFilterPick,
@@ -121,11 +126,13 @@ MovieList.Filter = function MovieListFilter() {
       className={`${playfairDisplay.className} flex gap-5 items-center text-2xl w-full overflow-y-scroll sm:overflow-y-clip`}
     >
       {context.title && <h2>{context.title}</h2>}
-      <Filter
-        filterName={context.filterName}
-        activeFilter={context.filterPick}
-        setActiveFilter={context.setFilterPick}
-      />
+      {!!context.filterName?.length && (
+        <Filter
+          filterName={context.filterName}
+          activeFilter={context.filterPick}
+          setActiveFilter={context.setFilterPick}
+        />
+      )}
     </div>
   );
 };
@@ -163,7 +170,7 @@ MovieList.Card = function MovieListCard({
           <Link
             key={movie.id}
             className="group transition-all duration-500 delay-300 h-96 w-56"
-            href={`/movie/${movie?.id}`}
+            href={`/${movie.title ? "movies" : "series"}/${movie?.id}`}
           >
             <div className={`${size} glases rounded-md overflow-hidden`}>
               <div className="card-gradient size-full absolute bottom-0">
@@ -171,7 +178,7 @@ MovieList.Card = function MovieListCard({
                   <div className="rating genre space-y-2">
                     <div className="flex gap-2 text-xs font-medium">
                       <p className="flex gap-1 items-center">
-                        {Math.round(movie?.rating)}
+                        {movie?.rating}
                         <span>
                           <FaStar className="h-3 w-3 text-light-500" />
                         </span>
@@ -191,7 +198,7 @@ MovieList.Card = function MovieListCard({
               <div className="group-hover:h-2/3 relative h-2/3 lg:size-full transition-all z-10">
                 <Image
                   src={`https://image.tmdb.org/t/p/w300${movie?.poster}`}
-                  alt={movie.title}
+                  alt={movie.title || movie.name}
                   fill
                   className="bg-center bg-cover"
                 />
@@ -200,7 +207,7 @@ MovieList.Card = function MovieListCard({
             <p
               className={`${playfairDisplay.className} mt-2 text-base font-medium transition-all`}
             >
-              {movie.title}
+              {movie.title || movie.name}
             </p>
           </Link>
         );

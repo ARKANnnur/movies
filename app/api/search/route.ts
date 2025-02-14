@@ -5,11 +5,11 @@ export async function GET(request: Request) {
   const baseUrl = process.env.MOVIE_BASE_URL;
 
   const { searchParams } = new URL(request.url);
-  const search = searchParams.get("by") || "day";
+  const search = searchParams.get("search") || "";
 
   try {
     const res = await fetch(
-      `${baseUrl}/trending/movie/${search}?language=en-US`,
+      `${baseUrl}/search/movie?query=${search}&include_adult=false&language=en-US&page=1`,
       {
         headers: {
           accept: "application/json",
@@ -27,7 +27,6 @@ export async function GET(request: Request) {
       (movie: {
         id: number;
         title: string;
-        overview: string;
         poster_path: string;
         release_date: string;
         vote_average: number;
@@ -35,7 +34,6 @@ export async function GET(request: Request) {
       }) => ({
         id: movie.id,
         title: movie.title,
-        overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.release_date,
         rating: Math.round(movie.vote_average),
