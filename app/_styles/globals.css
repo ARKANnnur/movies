@@ -6,32 +6,52 @@ html {
   scrollbar-width: none;
 }
 
-.bg-slider{
-  -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+.bg-slider {
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
-.bg-scroller{
+.bg-scroller {
   background: rgb(255, 0, 255);
-  background: linear-gradient(90deg, rgba(16,15,16,1) 0%, rgba(255,255,255,0) 73%);
+  background: linear-gradient(
+    90deg,
+    rgba(16, 15, 16, 1) 0%,
+    rgba(255, 255, 255, 0) 73%
+  );
 }
 
-.bg-page{
-  -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-  mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+.bg-page {
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
-.bg-opt-gradient{
+.bg-opt-gradient {
   background: rgb(102, 97, 102);
-  background: linear-gradient(90deg, rgb(179, 46, 179) 0%, rgba(255, 0, 0, 0) 85%);
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.3);
--webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.3);
--moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.3);
+  background: linear-gradient(
+    90deg,
+    rgb(179, 46, 179) 0%,
+    rgba(255, 0, 0, 0) 85%
+  );
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
 }
-.bg-gradient{
-  box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.3);
--webkit-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.3);
--moz-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.3);
+.bg-gradient {
+  box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* .glass-effect{
@@ -39,36 +59,45 @@ html {
   background: linear-gradient(140deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.28893555713300945) 14%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 73%, rgba(255,255,255,0.263725473099396) 87%, rgba(255,255,255,1) 100%); 
 } */
 
-.glases{
-background: rgba(255, 35, 0, 0);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(5px);
-border: 1px solid rgba(255, 255, 255, 0.3);
+.card-gradient {
+  background: rgb(69,4,69);
+  background: linear-gradient(180deg, rgba(69,4,69,1) 0%, rgba(32,29,32,0.49341734985009633) 100%); 
 }
 
-.shadow-card{
-  box-shadow: 11px 10px 5px 0px rgba(0,0,0,0.34);
--webkit-box-shadow: 11px 10px 5px 0px rgba(0,0,0,0.34);
--moz-box-shadow: 11px 10px 5px 0px rgba(0,0,0,0.34);
+.glases {
+  background: rgba(255, 35, 0, 0);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.shadow-card {
+  box-shadow: 11px 10px 5px 0px rgba(0, 0, 0, 0.34);
+  -webkit-box-shadow: 11px 10px 5px 0px rgba(0, 0, 0, 0.34);
+  -moz-box-shadow: 11px 10px 5px 0px rgba(0, 0, 0, 0.34);
 }
 
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 45px;
-  aspect-ratio: .75;
+  aspect-ratio: 0.75;
   --c: no-repeat linear-gradient(#ffffff 0 0);
-  background: 
-    var(--c) 0%   100%,
-    var(--c) 50%  100%,
-    var(--c) 100% 100%;
+  background: var(--c) 0% 100%, var(--c) 50% 100%, var(--c) 100% 100%;
   background-size: 20% 65%;
   animation: l5 1s infinite linear;
 }
+
 @keyframes l5 {
-  20% {background-position: 0% 50% ,50% 100%,100% 100%}
-  40% {background-position: 0% 0%  ,50% 50% ,100% 100%}
-  60% {background-position: 0% 100%,50% 0%  ,100% 50% }
-  80% {background-position: 0% 100%,50% 100%,100% 0%  }
+  20% {
+    background-position: 0% 50%, 50% 100%, 100% 100%;
+  }
+  40% {
+    background-position: 0% 0%, 50% 50%, 100% 100%;
+  }
+  60% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  80% {
+    background-position: 0% 100%, 50% 100%, 100% 0%;
+  }
 }

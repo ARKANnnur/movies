@@ -14,10 +14,7 @@ export async function GET() {
       },
     });
     const data = await res.json();
-    cachedGenres = data.genres.reduce((acc: Record<number, string>, genre) => {
-      acc[genre.id] = genre.name;
-      return acc;
-    }, {});
+    cachedGenres = data;
   }
 
   return NextResponse.json(cachedGenres, {

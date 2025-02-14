@@ -3,14 +3,14 @@ import Link from "next/link";
 import React from "react";
 
 type Props = {
-  movieId: number;
+  data: any[];
   size?: string;
   parentSize?: string;
 };
 
-function TypeCard({ movieId, size = "w-56 h-72", parentSize }: Props) {
+function TypeCard({ data, size = "w-56 h-72", parentSize }: Props) {
   return (
-    <Link className={parentSize} href={`/movie/${movieId}`}>
+    <Link className={parentSize} href={`/movie/${data?.id}`}>
       <div className={`${size} glases rounded-lg overflow-hidden shadow-card`}>
         <div className="glass-effect absolute w-full h-full z-50"></div>
         <Image
@@ -20,7 +20,7 @@ function TypeCard({ movieId, size = "w-56 h-72", parentSize }: Props) {
           className="object-cover shadow-card"
         />
       </div>
-      <p className="mt-2">Judul</p>
+      <p className="mt-2">{data?.title}</p>
     </Link>
   );
 }

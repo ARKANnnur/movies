@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   const apiKey = process.env.MOVIE_KEY;
   const baseUrl = process.env.MOVIE_BASE_URL;
 
+  const { searchParams } = new URL(request.url);
+  const search = searchParams.get("by") || "day";
+
   try {
-    const res = await fetch(
-      `${baseUrl}/movie/now_playing?language=en-US&page=1`,
-      {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-      }
-    );
+    const res = await fetch(`${baseUrl}/trending/movie/${search}?language=en-US`, {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -24,6 +24,7 @@ export async function GET() {
       (movie: {
         id: number;
         title: string;
+        name: string;
         overview: string;
         poster_path: string;
         release_date: string;
@@ -31,7 +32,7 @@ export async function GET() {
         genre_ids: number[];
       }) => ({
         id: movie.id,
-        title: movie.title,
+        title: movie.title ? movie.title : movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.release_date,
@@ -40,11 +41,11 @@ export async function GET() {
       })
     );
 
-    return NextResponse.json(filterData.slice(0, 5));
+    return NextResponse.json(filterData);
   } catch (error) {
     console.error("Error fetching API:", error);
     return NextResponse.json(
-      { error: "Failed to fetch data" },
+      { error: "Failed to fetch data", search },
       { status: 500 }
     );
   }
