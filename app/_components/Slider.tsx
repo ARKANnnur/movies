@@ -90,7 +90,7 @@ function Slider() {
                     key={movie.title}
                     src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
                     alt={movie?.title}
-                    layout="fill"
+                    fill
                     draggable="false"
                     className={`bg-slider object-cover absolute top-full ${
                       index === countData ? "z-10" : "z-0 opacity-0"
@@ -115,7 +115,7 @@ function Slider() {
                 <p className="flex gap-1 items-center">
                   {moviesData[countData]?.rating}
                   <span>
-                    <FaStar className="h-3 w-3 text-light-500" />
+                    <FaStar className="h-3 w-3 text-yellow-400" />
                   </span>
                 </p>
                 <span>|</span>

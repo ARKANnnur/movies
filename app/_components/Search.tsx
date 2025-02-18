@@ -73,7 +73,7 @@ export default function Search() {
     <div ref={searchRef} className="w-full h-auto sm:w-1/2 relative">
       <input
         type="text"
-        className="w-full bg-transparent border-b border-light-50 border-opacity-45 focus:border-opacity-100 focus:outline-none text-left"
+        className="w-full bg-transparent border-b border-light-50 border-opacity-45 focus:border-opacity-100 focus:outline-none text-left z-50"
         placeholder="Search movie"
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setIsOpen(true)}
@@ -94,6 +94,9 @@ export default function Search() {
                   <Link
                     className="h-20 w-full flex items-center"
                     href={`/movie/${movie?.id}`}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
                   >
                     <div className="w-1/6 relative bg-slate-200 h-full">
                       <Image
@@ -105,12 +108,12 @@ export default function Search() {
                     </div>
                     <div className="w-2/3 p-2">
                       <h4 className="font-semibold">{movie?.title}</h4>
-                      <p className="flex gap-1 items-center text-sm">
-                        {movie?.rating}
+                      <div className="flex gap-1 items-center text-sm">
+                        <p>{movie?.rating}</p>
                         <FaStar className="h-3 w-3 text-yellow-400" />
                         <span>|</span>
-                        <span>{movie?.releaseDate}</span>
-                      </p>
+                        <p>{movie?.releaseDate}</p>
+                      </div>
                       <Genre
                         genreId={movie?.genre?.slice(0, 3)}
                         textSize="text-xs"

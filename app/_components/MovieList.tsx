@@ -170,7 +170,7 @@ MovieList.Card = function MovieListCard({
           <Link
             key={movie.id}
             className="group transition-all duration-500 delay-300 h-96 w-56"
-            href={`/${movie.title ? "movies" : "series"}/${movie?.id}`}
+            href={`/${movie.title ? "movie" : "series"}/${movie?.id}`}
           >
             <div className={`${size} glases rounded-md overflow-hidden`}>
               <div className="card-gradient size-full absolute bottom-0">
@@ -180,7 +180,7 @@ MovieList.Card = function MovieListCard({
                       <p className="flex gap-1 items-center">
                         {movie?.rating}
                         <span>
-                          <FaStar className="h-3 w-3 text-light-500" />
+                          <FaStar className="h-3 w-3 text-yellow-400" />
                         </span>
                       </p>
                       <span>|</span>

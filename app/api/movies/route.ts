@@ -25,7 +25,7 @@ export async function GET() {
         id: number;
         title: string;
         overview: string;
-        poster_path: string;
+        backdrop_path: string;
         release_date: string;
         vote_average: number;
         genre_ids: number[];
@@ -33,9 +33,9 @@ export async function GET() {
         id: movie.id,
         title: movie.title,
         overview: movie.overview,
-        poster: movie.poster_path,
+        poster: movie.backdrop_path,
         releaseDate: movie.release_date,
-        rating: movie.vote_average,
+        rating: Math.round(movie.vote_average),
         genre: movie.genre_ids,
       })
     );

@@ -60,8 +60,12 @@ html {
 } */
 
 .card-gradient {
-  background: rgb(69,4,69);
-  background: linear-gradient(180deg, rgba(69,4,69,1) 0%, rgba(32,29,32,0.49341734985009633) 100%); 
+  background: rgb(69, 4, 69);
+  background: linear-gradient(
+    180deg,
+    rgba(69, 4, 69, 1) 0%,
+    rgba(32, 29, 32, 0.49341734985009633) 100%
+  );
 }
 
 .glases {
