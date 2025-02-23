@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.MOVIE_KEY
+const API_URL = process.env.API_URL;
 
 function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
   const [genreName, setGenreName] = useState([]);

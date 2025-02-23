@@ -12,7 +12,7 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "700", "900"],
 });
 
-const API_URL = process.env.MOVIE_KEY;
+const API_URL = process.env.API_URL;
 
 type Cast = {
   id: number;

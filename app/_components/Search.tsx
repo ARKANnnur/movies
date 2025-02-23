@@ -7,7 +7,7 @@ import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 
-const API_URL = process.env.MOVIE_KEY;
+const API_URL = process.env.API_URL;
 
 export default function Search() {
   const [search, setSearch] = useState<string>("");
@@ -45,16 +45,14 @@ export default function Search() {
     }, 500); // Delay 500ms
 
     return () => clearTimeout(timeoutId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   // Function Get data
   const fetchSearchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `${API_URL}/search?search=${search}`
-      );
+      const res = await fetch(`${API_URL}/search?search=${search}`);
       const data = await res.json();
       setSearchData(data);
       setFilteredData(data.slice(0, 3)); // just get 3 data for first time
