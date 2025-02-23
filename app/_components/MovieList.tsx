@@ -21,6 +21,8 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "700", "900"],
 });
 
+const API_URL = process.env.MOVIE_KEY;
+
 type Movie = {
   id: number;
   title: string;
@@ -69,14 +71,12 @@ function MovieList({ title, filterName = [], children }: MovieListProps) {
   const converType = number == 3 ? "movie" : "tv";
 
   let types: any;
-  if (!convertTitle)
-    types = `http://localhost:3000/api/homeFilter?by=${filterPick}`;
+  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`;
   else if (convertTitle === "Movie")
-    types = `http://localhost:3000/api/trendingMovie?by=${filterPick}`;
+    types = `${API_URL}/trendingMovie?by=${filterPick}`;
   else if (convertTitle === "Series")
-    types = `http://localhost:3000/api/trendingTv?by=${filterPick}`;
-  else
-    types = `http://localhost:3000/api/byGenre?by=${convertTitle}&type=${converType}`;
+    types = `${API_URL}/trendingTv?by=${filterPick}`;
+  else types = `${API_URL}/byGenre?by=${convertTitle}&type=${converType}`;
 
   useEffect(
     function () {

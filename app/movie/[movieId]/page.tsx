@@ -12,6 +12,8 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "700", "900"],
 });
 
+const API_URL = process.env.MOVIE_KEY;
+
 type Cast = {
   id: number;
   name: string;
@@ -37,7 +39,7 @@ async function page({ params }: { params: { movieID: string } }) {
   const { movieID } = params;
 
   // Fetch data dari API kita sendiri
-  const res = await fetch(`http://localhost:3000/api/movies/${movieID}`, {
+  const res = await fetch(`${API_URL}/movies/${movieID}`, {
     cache: "no-store", // Hindari caching agar data selalu update
   });
 

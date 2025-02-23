@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 
+const API_URL = process.env.MOVIE_KEY
+
 function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
   const [genreName, setGenreName] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +26,7 @@ function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
           return;
         }
 
-        const res = await fetch(`http://localhost:3000/api/genre`);
+        const res = await fetch(`${API_URL}/genre`);
 
         if (!res.ok) throw new Error("Network response was not ok");
 

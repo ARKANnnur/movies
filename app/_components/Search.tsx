@@ -7,6 +7,8 @@ import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 
+const API_URL = process.env.MOVIE_KEY;
+
 export default function Search() {
   const [search, setSearch] = useState<string>("");
   const [searchData, setSearchData] = useState<any[]>([]);
@@ -51,7 +53,7 @@ export default function Search() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/api/search?search=${search}`
+        `${API_URL}/search?search=${search}`
       );
       const data = await res.json();
       setSearchData(data);

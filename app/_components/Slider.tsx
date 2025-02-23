@@ -26,6 +26,8 @@ type Movie = {
   poster: string;
 };
 
+const API_URL = process.env.MOVIE_KEY
+
 function Slider() {
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
   const [countData, setCountData] = useState(0);
@@ -53,7 +55,7 @@ function Slider() {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await fetch("http://localhost:3000/api/movies");
+        const res = await fetch(`${API_URL}/movies"`);
         const data = await res.json();
         setMoviesData(data);
       } catch (error) {
