@@ -1,5 +1,4 @@
 import React from "react";
-import TypeCard from "@/_components/TypeCard";
 
 type Props = {
   searchParams: any;

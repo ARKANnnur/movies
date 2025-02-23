@@ -26,7 +26,7 @@ type Movie = {
   title: string;
   name: string;
   overview: string;
-  genre: number;
+  genre: number[];
   rating: number;
   releaseDate: string;
   poster: string;
@@ -95,6 +95,7 @@ function MovieList({ title, filterName = [], children }: MovieListProps) {
       }
       getMovies();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterPick, types]
   );
 

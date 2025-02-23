@@ -1,12 +1,7 @@
 import Navbar from "@/_components/Navbar";
-import { Playfair_Display, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "@/_styles/globals.css";
-import Test from "./_components/test";
 
-// const playfairDisplay = Playfair_Display({
-//   subsets: ["latin"],
-//   weight: ["400", "700", "900"],
-// });
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["300", "400", "700", "900"],
@@ -18,7 +13,7 @@ export const metadata = {
     default: "Movies",
   },
   description:
-    "Escape to tranquility in the heart of nature. Cozy cabins with breathtaking views, where mountains meet the lake. Your serene retreat awaits. ",
+    "Discover the best movies easily! 🎬 Use Movies to search for your favorite films, read reviews, and save movies to watch later. Bookmark must-watch films effortlessly! 🚀",
 };
 
 export default function RootLayout({

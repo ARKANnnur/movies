@@ -43,6 +43,7 @@ export default function Search() {
     }, 500); // Delay 500ms
 
     return () => clearTimeout(timeoutId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   // Function Get data
