@@ -22,6 +22,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+console.log(API_URL);
 
 type Movie = {
   id: number;
@@ -201,6 +202,7 @@ MovieList.Card = function MovieListCard({
                   src={`https://image.tmdb.org/t/p/w300${movie?.poster}`}
                   alt={movie.title || movie.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                   className="bg-center bg-cover"
                 />
               </div>

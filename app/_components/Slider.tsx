@@ -27,6 +27,7 @@ type Movie = {
 };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+console.log(API_URL);
 
 function Slider() {
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
@@ -55,7 +56,7 @@ function Slider() {
   useEffect(() => {
     async function getData() {
       try {
-        const res = await fetch(`${API_URL}/movies"`);
+        const res = await fetch(`${API_URL}/movies`);
         const data = await res.json();
         setMoviesData(data);
       } catch (error) {
@@ -93,6 +94,8 @@ function Slider() {
                     src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
                     alt={movie?.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                    priority={true}
                     draggable="false"
                     className={`bg-slider object-cover absolute top-full ${
                       index === countData ? "z-10" : "z-0 opacity-0"

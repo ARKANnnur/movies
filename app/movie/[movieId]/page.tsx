@@ -53,6 +53,8 @@ async function page({ params }: { params: { movieID: string } }) {
         <Image
           src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
           alt={movie?.title}
+          priority={true}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           fill
           className="object-cover"
         />

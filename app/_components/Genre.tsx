@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+console.log(API_URL)
 
 function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
   const [genreName, setGenreName] = useState([]);
