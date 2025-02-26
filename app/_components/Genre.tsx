@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL_DEV;
 
 function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
   const [genreName, setGenreName] = useState([]);

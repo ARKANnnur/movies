@@ -7,7 +7,8 @@ import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL_DEV;
 
 export default function Search() {
   const [search, setSearch] = useState<string>("");

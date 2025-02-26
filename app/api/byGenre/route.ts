@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const apiKey = process.env.MOVIE_KEY;
   const baseUrl = process.env.MOVIE_BASE_URL;
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL =
+    process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL_DEV;
 
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("by") || "";
@@ -63,7 +64,9 @@ export async function GET(request: Request) {
         title: movie.title ? movie.title : movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
-        releaseDate: movie.release_date ? movie.release_date : movie.first_air_date,
+        releaseDate: movie.release_date
+          ? movie.release_date
+          : movie.first_air_date,
         rating: Math.round(movie.vote_average),
         genre: movie.genre_ids,
       })

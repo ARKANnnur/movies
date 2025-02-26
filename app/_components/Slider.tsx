@@ -26,7 +26,8 @@ type Movie = {
   poster: string;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL_DEV;
 
 function Slider() {
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
