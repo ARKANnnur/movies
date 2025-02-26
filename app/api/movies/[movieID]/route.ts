@@ -9,7 +9,6 @@ export async function GET(
   const baseUrl = process.env.MOVIE_BASE_URL;
 
   try {
-    // Fetch all API calls in parallel
     const [movieRes, castCrewRes, recommendationsRes] = await Promise.all([
       fetch(`${baseUrl}/movie/${movieID}?language=en-US`, {
         headers: {
@@ -34,17 +33,14 @@ export async function GET(
       ),
     ]);
 
-    // Cek jika salah satu fetch gagal
     if (!movieRes.ok || !castCrewRes.ok || !recommendationsRes.ok) {
       throw new Error("Failed to fetch data from API");
     }
 
-    // Parse JSON responses
     const movieData = await movieRes.json();
     const castCrewData = await castCrewRes.json();
     const recommendationsData = await recommendationsRes.json();
 
-    // Cari director (default ke "Unknown" jika tidak ditemukan)
     const director =
       castCrewData.crew.find(({ job }: { job: string }) => job === "Director")
         ?.name || "Unknown";
@@ -71,7 +67,6 @@ export async function GET(
         poster: movie.backdrop_path,
       }));
 
-    // Struktur data yang akan dikirim
     const responseData = {
       title: movieData.title,
       rating: Math.round(movieData.vote_average),
@@ -81,8 +76,8 @@ export async function GET(
       overview: movieData.overview,
       poster: movieData.backdrop_path,
       director,
-      cast: castFilter, // Ambil 7 cast pertama
-      recommendations: recommendationsFilter, // Semua rekomendasi film
+      cast: castFilter, 
+      recommendations: recommendationsFilter, 
     };
 
     return NextResponse.json(responseData);

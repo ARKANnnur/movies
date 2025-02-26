@@ -8,7 +8,6 @@ export async function GET() {
 
   if (!cachedGenres) {
     try {
-      // Fetch kedua API secara paralel
       const [movieRes, tvRes] = await Promise.all([
         fetch(`${baseUrl}/genre/movie/list?language=en`, {
           headers: {
@@ -29,7 +28,6 @@ export async function GET() {
         tvRes.json(),
       ]);
 
-      // Gabungkan genre movie & TV, tanpa replace yang sudah ada
       const mergedGenres = { ...movieData };
 
       tvData.genres.forEach((tvGenre: { id: number; name: string }) => {
@@ -52,7 +50,7 @@ export async function GET() {
 
   return NextResponse.json(cachedGenres, {
     headers: {
-      "Cache-Control": "s-maxage=86400, stale-while-revalidate", // Cache selama 24 jam
+      "Cache-Control": "s-maxage=86400, stale-while-revalidate",
     },
   });
 }

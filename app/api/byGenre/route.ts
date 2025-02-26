@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const apiKey = process.env.MOVIE_KEY;
   const baseUrl = process.env.MOVIE_BASE_URL;
+  const API_URL = process.env.API_URL;
 
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("by") || "";
@@ -10,10 +11,10 @@ export async function GET(request: Request) {
 
   try {
     let genreId = search;
-    const isNumber = /^\d+$/.test(search); // check search is number or string
+    const isNumber = /^\d+$/.test(search);
 
     if (!isNumber) {
-      const genreRes = await fetch("http://localhost:3000/api/genre");
+      const genreRes = await fetch(`${API_URL}/genre`);
       if (!genreRes.ok) throw new Error("Failed to fetch genres");
 
       const { genres } = await genreRes.json();
