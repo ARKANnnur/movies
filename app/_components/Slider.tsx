@@ -26,7 +26,7 @@ type Movie = {
   poster: string;
 };
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function Slider() {
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
@@ -121,9 +121,9 @@ function Slider() {
                   </span>
                 </p>
                 <span>|</span>
-                <p>{moviesData[countData].releaseDate}</p>
+                <p>{moviesData[countData]?.releaseDate}</p>
               </div>
-              <Genre genreId={moviesData[countData].genre} />
+              <Genre genreId={moviesData[countData]?.genre} />
               <p className="text-sm">
                 {textLimit(moviesData[countData]?.overview)}
               </p>
