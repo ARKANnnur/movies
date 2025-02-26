@@ -22,7 +22,6 @@ const playfairDisplay = Playfair_Display({
 });
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-console.log(API_URL);
 
 type Movie = {
   id: number;

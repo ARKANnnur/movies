@@ -8,7 +8,6 @@ import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-console.log(API_URL)
 
 export default function Search() {
   const [search, setSearch] = useState<string>("");

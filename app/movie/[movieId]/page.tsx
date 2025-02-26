@@ -38,12 +38,11 @@ type Movie = {
 async function page({ params }: { params: { movieID: string } }) {
   const { movieID } = params;
 
-  // Fetch data dari API kita sendiri
   const res = await fetch(`${API_URL}/movies/${movieID}`, {
-    cache: "no-store", // Hindari caching agar data selalu update
+    cache: "no-store",
   });
 
-  if (!res.ok) return console.log("error"); // Redirect ke 404 jika tidak ditemukan
+  if (!res.ok) return console.log("error");
 
   const movie: Movie = await res.json();
 
