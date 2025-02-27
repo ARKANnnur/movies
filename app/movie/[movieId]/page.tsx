@@ -12,10 +12,9 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "700", "900"],
 });
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL_DEV;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  console.log(API_URL, 'api')
+console.log(API_URL, "api");
 
 type Cast = {
   id: number;
@@ -41,17 +40,17 @@ type Movie = {
 async function page({ params }: { params: { movieID: string } }) {
   const { movieID } = params;
 
-  console.log(movieID, 'movie ID')
+  console.log(movieID, "movie ID");
   const res = await fetch(`${API_URL}/movies/${movieID}`, {
     cache: "no-store",
   });
 
-  console.log(res, 'res')
-  
+  console.log(res, "res");
+
   if (!res.ok) return console.log("error");
-  
+
   const movie: Movie = await res.json();
-  console.log(movie, 'data')
+  console.log(movie, "data");
 
   return (
     <div className="w-dvw">
@@ -178,7 +177,7 @@ function Recomendations({ recomendations }: { recomendations: any }) {
                 className="object-cover"
               />
             </div>
-            <p className="text-sm">{rec?.title}</p>
+            <p className="text-sm">{textLimit(rec?.title, 20)}</p>
           </div>
         ))}
       </div>
