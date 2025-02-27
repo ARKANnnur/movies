@@ -14,8 +14,6 @@ const playfairDisplay = Playfair_Display({
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-console.log(API_URL, "api");
-
 type Cast = {
   id: number;
   name: string;
@@ -38,19 +36,17 @@ type Movie = {
 };
 
 async function page({ params }: { params: { movieID: string } }) {
-  const { movieID } = params;
+  const movieID = params;
 
-  console.log(movieID, "movie ID");
-  const res = await fetch(`${API_URL}/movies/${movieID}`, {
+  console.log(params, "🔍 Cek params");
+  console.log(params?.movieID, "🎬 movieID");
+  const res = await fetch(`${API_URL}/movies/${movieID.movieID}`, {
     cache: "no-store",
   });
-
-  console.log(res, "res");
 
   if (!res.ok) return console.log("error");
 
   const movie: Movie = await res.json();
-  console.log(movie, "data");
 
   return (
     <div className="w-dvw">
