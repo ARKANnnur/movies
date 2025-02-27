@@ -36,6 +36,8 @@ type Movie = {
 };
 
 async function page({ params }: { params: { movieId: string } }) {
+  console.log(params, "🔍 Cek params");
+  console.log(params?.movieId, "🎬 movieId");
 
   const res = await fetch(`${API_URL}/movies/${params.movieId}`, {
     cache: "no-store",
