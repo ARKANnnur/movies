@@ -35,12 +35,9 @@ type Movie = {
   recommendations: any[];
 };
 
-async function page({ params }: { params: { movieID: string } }) {
-  const movieID = params;
+async function page({ params }: { params: { movieId: string } }) {
 
-  console.log(params, "🔍 Cek params");
-  console.log(params?.movieID, "🎬 movieID");
-  const res = await fetch(`${API_URL}/movies/${movieID.movieID}`, {
+  const res = await fetch(`${API_URL}/movies/${params.movieId}`, {
     cache: "no-store",
   });
 

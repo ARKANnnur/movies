@@ -2,28 +2,28 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { movieID: string } }
+  { params }: { params: { movieId: string } }
 ) {
-  const { movieID } = params;
+  const { movieId } = params;
   const apiKey = process.env.MOVIE_KEY;
   const baseUrl = process.env.MOVIE_BASE_URL;
 
   try {
     const [movieRes, castCrewRes, recommendationsRes] = await Promise.all([
-      fetch(`${baseUrl}/movie/${movieID}?language=en-US`, {
+      fetch(`${baseUrl}/movie/${movieId}?language=en-US`, {
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${apiKey}`,
         },
       }),
-      fetch(`${baseUrl}/movie/${movieID}/credits?language=en-US`, {
+      fetch(`${baseUrl}/movie/${movieId}/credits?language=en-US`, {
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${apiKey}`,
         },
       }),
       fetch(
-        `${baseUrl}/movie/${movieID}/recommendations?language=en-US&page=1`,
+        `${baseUrl}/movie/${movieId}/recommendations?language=en-US&page=1`,
         {
           headers: {
             accept: "application/json",
