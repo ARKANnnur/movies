@@ -76,8 +76,8 @@ export async function GET(
       overview: movieData.overview,
       poster: movieData.backdrop_path,
       director,
-      cast: castFilter, 
-      recommendations: recommendationsFilter, 
+      cast: castFilter,
+      recommendations: recommendationsFilter,
     };
 
     return NextResponse.json(responseData);
