@@ -6,6 +6,7 @@ import Stars from "@/_components/StarRating";
 import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import textLimit from "@/_utils/textLimit";
+import Link from "next/link";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -36,9 +37,6 @@ type Movie = {
 };
 
 async function page({ params }: { params: { movieId: string } }) {
-  console.log(params, "🔍 Cek params");
-  console.log(params?.movieId, "🎬 movieId");
-
   const res = await fetch(`${API_URL}/movies/${params.movieId}`, {
     cache: "no-store",
   });
@@ -49,7 +47,7 @@ async function page({ params }: { params: { movieId: string } }) {
 
   return (
     <div className="w-dvw">
-      <div className="w-[80%] right-0 absolute min-h-dvh bg-page">
+      <div className="w-full lg:w-[80%] right-0 absolute min-h-dvh bg-page">
         <Image
           src={`https://image.tmdb.org/t/p/w1280${movie?.poster}`}
           alt={movie?.title}
@@ -60,7 +58,7 @@ async function page({ params }: { params: { movieId: string } }) {
         />
       </div>
       <div className="gap-5 flex flex-col p-5 min-h-dvh pt-12">
-        <div className="border glases border-white/10 w-full md:w-1/3 p-2 md:p-5 rounded-xl z-10 min-h-64 text-light-50 space-y-3 mt-12">
+        <div className="border glases border-white/10 w-full lg:w-1/3 p-2 lg:p-5 rounded-xl z-10 min-h-64 text-light-50 space-y-3 mt-12">
           <h1 className={`${playfairDisplay.className} text-2xl`}>
             {movie?.title}
           </h1>
@@ -110,13 +108,13 @@ async function page({ params }: { params: { movieId: string } }) {
             </p>
           </div>
         </div>
-        <div className="border glases border-white/10 w-full md:w-1/3 rounded-lg z-10 h-14 flex justify-center items-center gap-2">
+        <div className="border glases border-white/10 w-full lg:w-1/3 rounded-lg z-10 h-14 flex justify-center items-center gap-2">
           <BookmarkButton />
           <Stars />
         </div>
-        <div className="flex gap-5">
-          <Cast cast={movie?.cast} />
-          <Recomendations recomendations={movie?.recommendations} />
+        <div className="flex gap-5 flex-col lg:flex-row">
+          {movie?.cast.length  && <Cast cast={movie?.cast} />}
+          {movie?.recommendations.length > 0 && <Recomendations recomendations={movie?.recommendations} />}
         </div>
       </div>
     </div>
@@ -125,7 +123,7 @@ async function page({ params }: { params: { movieId: string } }) {
 
 function Cast({ cast }: { cast: Cast[] }) {
   return (
-    <div className="border glases rounded-lg  border-white/10 w-full md:w-1/3 p-5">
+    <div className="border glases rounded-lg  border-white/10 w-full lg:w-1/3 p-5">
       <h3 className="cursor-pointer hover:text-white hover:underline text-white underline decoration-2 underline-offset-8 text-lg">
         cast
       </h3>
@@ -154,13 +152,14 @@ function Cast({ cast }: { cast: Cast[] }) {
 
 function Recomendations({ recomendations }: { recomendations: any }) {
   return (
-    <div className="border glases rounded-lg  border-white/10 w-full md:w-2/3 p-5">
+    <div className="border glases rounded-lg  border-white/10 w-full lg:w-2/3 p-5">
       <h3 className="cursor-pointer hover:text-white hover:underline text-white underline decoration-2 underline-offset-8 text-lg">
         Recomendations
       </h3>
       <div className="flex gap-5 mt-5 overflow-x-scroll scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]">
         {recomendations?.map((rec: any) => (
-          <div
+          <Link
+            href={`/movie/${rec?.id}`}
             key={rec?.id}
             className="text-center  flex flex-col items-center"
           >
@@ -173,7 +172,7 @@ function Recomendations({ recomendations }: { recomendations: any }) {
               />
             </div>
             <p className="text-sm">{textLimit(rec?.title, 20)}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

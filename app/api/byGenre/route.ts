@@ -60,7 +60,8 @@ export async function GET(request: Request) {
         genre_ids: number[];
       }) => ({
         id: movie.id,
-        title: movie.title ? movie.title : movie.name,
+        title: movie.title,
+        name:  movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.release_date

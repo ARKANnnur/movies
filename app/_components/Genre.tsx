@@ -56,7 +56,7 @@ function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
   return (
     <>
       {!isLoading && (
-        <ul className={`flex gap-${gap} text-sm text-light-100`}>
+        <ul className={`flex gap-${gap} text-sm text-light-100 flex-wrap`}>
           {pickGenre?.map((genre: any) => (
             <li
               key={genre.id}

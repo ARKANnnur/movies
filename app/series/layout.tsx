@@ -1,9 +1,9 @@
-import React from 'react'
+type Props = {
+  children: any;
+};
 
-type Props = {}
-
-export default function layout({}: Props) {
-  return (
-    <div>layout</div>
-  )
+function layout({ children }: Props) {
+  return <div className="w-dvw h-auto">{children}</div>;
 }
+
+export default layout;
