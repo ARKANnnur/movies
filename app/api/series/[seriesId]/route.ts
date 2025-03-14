@@ -24,7 +24,7 @@ export async function GET(
     const filterData = {
       id: series.id,
       name: series.name,
-      rating: series.vote_average,
+      rating: Math.round(series.vote_average),
       releaseFirstDate: series.first_air_date,
       releaseLastDate: series.last_air_date,
       totalEpisode: series.episode_run_time[0],
@@ -34,7 +34,17 @@ export async function GET(
       overview: series.overview,
       homepage: series.homepage,
       poster: series.poster_path,
-      lastEps: series.last_episode_to_air,
+      lastEps: {
+        id: series.last_episode_to_air.id,
+        name: series.last_episode_to_air.name,
+        overview: series.last_episode_to_air.overview,
+        rating: Math.round(series.last_episode_to_air.vote_average),
+        releaseDate: series.last_episode_to_air.air_date,
+        episodeNumber: series.last_episode_to_air.episode_number,
+        runtime: series.last_episode_to_air.runtime,
+        seasonNumber: series.last_episode_to_air.season_number,
+        poster: series.last_episode_to_air.still_path,
+      },
       nextEps: series.next_episode_to_air,
     };
     return NextResponse.json(filterData);

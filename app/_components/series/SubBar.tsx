@@ -8,41 +8,37 @@ import Episode from "./Episode";
 import Recommendations from "./Recommendations";
 import Similiar from "./Similiar";
 
-type Props = {};
+type Props = { id: number; season: number };
 
-function SubBar({}: Props) {
-  const [bar, setBar] = useState("highlight");
+function SubBar({ id, season }: Props) {
+  const [bar, setBar] = useState("episode");
 
   return (
-    <div className="grid grid-flow-col auto-cols-max lg:pt-24 grow z-10 gap-5">
-      <div className="border glases border-white/10 rounded-xl p-2 flex flex-col gap-2">
-        <p
-          onClick={() => setBar("highlight")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer"
-        >
-          <IoMdHome className="size-4" />
-        </p>
-        <p
+    <div className="lg:pt-24 flex-1 z-10">
+      <div className="border glases border-white/10 rounded-xl p-2 flex gap-2 h-fit w-fit mb-2">
+        <div
           onClick={() => setBar("episode")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer"
+          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
         >
           <MdMovie className="size-4" />
-        </p>
-        <p
+          <p>Episode</p>
+        </div>
+        <div
           onClick={() => setBar("recommendations")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer"
+          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
         >
           <IoMdFilm className="size-4" />
-        </p>
-        <p
+          <p>Recommendations</p>
+        </div>
+        <div
           onClick={() => setBar("similiar")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer"
+          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
         >
           <PiFilmScript className="size-4" />
-        </p>
+          <p>Similiar</p>
+        </div>
       </div>
-      {bar === "highlight" && <Highlight />}
-      {(bar === "episode" || bar === "highlight") && <Episode />}
+      {bar === "episode" && <Episode id={id} seasonCount={season} />}
       {bar === "recommendations" && <Recommendations />}
       {bar === "similiar" && <Similiar />}
     </div>

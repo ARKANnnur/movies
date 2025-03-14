@@ -67,21 +67,21 @@ async function page({ params }: { params: { movieId: string } }) {
               <p className="flex gap-1 items-center">
                 {movie?.rating}
                 <span>
-                  <FaStar className="h-3 w-3 text-yellow-400" />
+                  <FaStar className="h-3 w-3 text-yellow-400 -translate-y-[2px]" />
                 </span>
               </p>
               <span>|</span>
               <p className="flex gap-1 items-center">
                 {movie?.releaseDate}
                 <span>
-                  <FaRegCalendarAlt className="h-3 w-3 text-light-50" />
+                  <FaRegCalendarAlt className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                 </span>
               </p>
               <span>|</span>
               <p className="flex gap-1 items-center">
                 {movie?.runtime} Minute
                 <span>
-                  <IoIosTimer className="h-3 w-3 text-light-50" />
+                  <IoIosTimer className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                 </span>
               </p>
             </div>

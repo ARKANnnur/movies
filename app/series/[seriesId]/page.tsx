@@ -6,6 +6,8 @@ import Stars from "@/_components/StarRating";
 import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import SubBar from "@/_components/series/SubBar";
+import { IoIosTimer } from "react-icons/io";
+import Highlight from "@/_components/series/Highlight";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -21,6 +23,18 @@ type Cast = {
   character: string;
 };
 
+type LastEpisode = {
+  id: number;
+  name: string;
+  overview: string;
+  rating: number;
+  releaseDate: string;
+  episodeNumber: number;
+  runtime: number;
+  seasonNumber: number;
+  poster: string;
+};
+
 type Series = {
   id: number;
   name: string;
@@ -28,14 +42,15 @@ type Series = {
   releaseFirstDate: string;
   releaseLastDate: string;
   totalEpisode: string;
-  totalSeason: string;
+  totalSeason: number;
   created: string;
   director: number;
   cast: Cast[];
-  genres: any[];
+  genre: any[];
   overview: string;
   poster: string;
   recommendations: any[];
+  lastEps: LastEpisode;
 };
 
 async function page({ params }: { params: { seriesId: string } }) {
@@ -61,28 +76,28 @@ async function page({ params }: { params: { seriesId: string } }) {
       </div>
       <div className="flex items-start justify-between">
         <div className="gap-5 flex flex-col p-5 min-h-dvh pt-12 w-full lg:w-1/3">
-          <div className="border glases border-white/10 w-full p-2 lg:p-5 rounded-xl z-10 min-h-64 text-light-50 space-y-3 mt-12">
+          <div className="border glases border-white/10 w-full p-2 lg:p-5 rounded-xl z-10 h-auto text-light-50 space-y-3 mt-12">
             <h1 className={`${playfairDisplay.className} text-2xl`}>
               {series?.name}
             </h1>
             <div className="rating genre space-y-2">
-              <div className="flex gap-2 text-xs font-medium">
+              <div className="flex gap-2 text-xs font-medium items-center">
                 <p className="flex gap-1 items-center">
                   {series?.rating}
                   <span>
-                    <FaStar className="h-3 w-3 text-yellow-400" />
+                    <FaStar className="h-3 w-3 text-yellow-400 -translate-y-[2px]" />
                   </span>
                 </p>
                 <span>|</span>
                 <div className="flex gap-x-1 items-center">
                   <p>{series?.releaseFirstDate}</p>
                   <span>
-                    <FaRegCalendarAlt className="h-3 w-3 text-light-50" />
+                    <FaRegCalendarAlt className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                   </span>
                   <span>-</span>
                   <p>{series?.releaseLastDate}</p>
                   <span>
-                    <FaRegCalendarAlt className="h-3 w-3 text-light-50" />
+                    <FaRegCalendarAlt className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                   </span>
                 </div>
                 <span>|</span>
@@ -90,19 +105,19 @@ async function page({ params }: { params: { seriesId: string } }) {
                   <p className="flex gap-1 items-center">
                     {series?.totalEpisode} Episode
                     <span>
-                      <FaClapperboard className="h-3 w-3 text-light-50" />
+                      <FaClapperboard className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                     </span>
                   </p>
                 ) : (
                   <p className="flex gap-1 items-center">
                     {series?.totalSeason} Season
                     <span>
-                      <FaClapperboard className="h-3 w-3 text-light-50" />
+                      <FaClapperboard className="h-3 w-3 text-light-50 -translate-y-[2px]" />
                     </span>
                   </p>
                 )}
               </div>
-              <Genre genreId={series?.genres} textSize="text-xs" gap={2} />
+              <Genre genreId={series?.genre} textSize="text-xs" gap={2} />
             </div>
 
             <div className="deskripsion text-base">
@@ -116,8 +131,9 @@ async function page({ params }: { params: { seriesId: string } }) {
             <BookmarkButton />
             <Stars />
           </div>
+          <Highlight highlight={series?.lastEps} />
         </div>
-        <SubBar />
+        <SubBar id={series?.id} season={series?.totalSeason} />
       </div>
     </div>
   );
