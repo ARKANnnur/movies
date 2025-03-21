@@ -112,3 +112,13 @@ html {
     background-position: 0% 100%, 50% 100%, 100% 0%;
   }
 }
+
+.scroll-thin {
+  @apply [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-gray-300/50;
+}
+.scroll-thin-2 {
+  @apply [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-gray-300/50;
+}
+.scroll-thin-3 {
+  @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-gray-300/50;
+}

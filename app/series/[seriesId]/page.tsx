@@ -6,7 +6,6 @@ import Stars from "@/_components/StarRating";
 import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import SubBar from "@/_components/series/SubBar";
-import { IoIosTimer } from "react-icons/io";
 import Highlight from "@/_components/series/Highlight";
 
 const playfairDisplay = Playfair_Display({
@@ -74,8 +73,8 @@ async function page({ params }: { params: { seriesId: string } }) {
           className="object-cover"
         />
       </div>
-      <div className="flex items-start justify-between">
-        <div className="gap-5 flex flex-col p-5 min-h-dvh pt-12 w-full lg:w-1/3">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+        <div className="gap-5 flex flex-col p-5 lg:min-h-dvh pt-12 w-full lg:w-1/3">
           <div className="border glases border-white/10 w-full p-2 lg:p-5 rounded-xl z-10 h-auto text-light-50 space-y-3 mt-12">
             <h1 className={`${playfairDisplay.className} text-2xl`}>
               {series?.name}

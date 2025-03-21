@@ -1,21 +1,131 @@
 "use client";
-import { useState } from "react";
-import { IoMdHome, IoMdFilm } from "react-icons/io";
+import { useEffect, useState } from "react";
+import { IoMdFilm } from "react-icons/io";
 import { MdMovie } from "react-icons/md";
 import { PiFilmScript } from "react-icons/pi";
-import Highlight from "./Highlight";
-import Episode from "./Episode";
-import Recommendations from "./Recommendations";
-import Similiar from "./Similiar";
+import Episode from "@/_components/series/Episode";
+import Recommendations from "@/_components/series/Recommendations";
+import Similiar from "@/_components/series/Similiar";
 
 type Props = { id: number; season: number };
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+type Actor = {
+  id: number;
+  image: string | null;
+  name: string;
+  character: string;
+};
+
+type Series = {
+  id: number;
+  name: string;
+  overview: string;
+  episodeNumber: number;
+  runtime: number;
+  releaseDate: string;
+  poster: string;
+  rating: number;
+  director: string;
+  cast: Actor[];
+};
+
+type Recomend = {
+  id: number;
+  name: string;
+  overview: string;
+  poster: string;
+  releaseDate: string;
+  rating: number;
+  genre: number[];
+};
 
 function SubBar({ id, season }: Props) {
   const [bar, setBar] = useState("episode");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [episodesBySeason, setEpisodesBySeason] = useState<
+    Record<number, Series[]>
+  >({});
+  const [seasonNumber, setSeasonNumber] = useState<number>(1);
+  const [recommendations, setRecommendations] = useState<Recomend[]>([]);
+  const [similiar, setSimiliar] = useState<Recomend[]>([]);
+
+  useEffect(() => {
+    async function getEpisode() {
+      if (episodesBySeason[seasonNumber]) return;
+      setIsLoading(true);
+
+      try {
+        const res = await fetch(
+          `${API_URL}/series/episode?seriesId=${id}&seasonNumber=${seasonNumber}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch episodes");
+
+        const data: Series[] = await res.json();
+
+        setEpisodesBySeason((prev) => ({
+          ...prev,
+          [seasonNumber]: data,
+        }));
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (bar === "episode") getEpisode();
+  }, [id, seasonNumber, episodesBySeason, bar]);
+
+  useEffect(() => {
+    async function getRecommendations() {
+      if (recommendations.length !== 0) return;
+      setIsLoading(true);
+
+      try {
+        const res = await fetch(`${API_URL}/series/recommendations/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch episodes");
+
+        const data: Recomend[] = await res.json();
+
+        setRecommendations(data);
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (bar === "recommendations") getRecommendations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bar, id]);
+
+  useEffect(() => {
+    async function getSimiliar() {
+      if (similiar.length !== 0) return;
+      setIsLoading(true);
+
+      try {
+        const res = await fetch(`${API_URL}/series/similiar/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch episodes");
+
+        const data: Recomend[] = await res.json();
+
+        setSimiliar(data);
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (bar === "similiar") getSimiliar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bar, id]);
 
   return (
-    <div className="lg:pt-24 flex-1 z-10">
-      <div className="border glases border-white/10 rounded-xl p-2 flex gap-2 h-fit w-fit mb-2">
+    <div className="p-5 lg:pt-24 lg:p-0 flex-1 z-10 w-full">
+      <div className="border glases border-white/10 rounded-xl p-2 flex flex-wrap gap-2 h-fit w-fit mb-2">
         <div
           onClick={() => setBar("episode")}
           className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
@@ -38,9 +148,21 @@ function SubBar({ id, season }: Props) {
           <p>Similiar</p>
         </div>
       </div>
-      {bar === "episode" && <Episode id={id} seasonCount={season} />}
-      {bar === "recommendations" && <Recommendations />}
-      {bar === "similiar" && <Similiar />}
+      {bar === "episode" && (
+        <Episode
+          isLoading={isLoading}
+          seasonNumber={seasonNumber}
+          setSeasonNumber={setSeasonNumber}
+          episodesBySeason={episodesBySeason}
+          seasonCount={season}
+        />
+      )}
+      {bar === "recommendations" && (
+        <Recommendations isLoading={isLoading} recomend={recommendations} />
+      )}
+      {bar === "similiar" && (
+        <Similiar isLoading={isLoading} similiar={similiar} />
+      )}
     </div>
   );
 }
