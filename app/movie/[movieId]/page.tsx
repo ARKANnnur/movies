@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Playfair_Display } from "next/font/google";
 import { FaStar, FaRegCalendarAlt } from "react-icons/fa";
 import { IoIosTimer } from "react-icons/io";
 import Stars from "@/_components/StarRating";
@@ -7,11 +6,6 @@ import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import textLimit from "@/_utils/textLimit";
 import Link from "next/link";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -58,10 +52,8 @@ async function page({ params }: { params: { movieId: string } }) {
         />
       </div>
       <div className="gap-5 flex flex-col p-5 min-h-dvh pt-12">
-        <div className="border glases border-white/10 w-full lg:w-1/3 p-2 lg:p-5 rounded-xl z-10 min-h-64 text-light-50 space-y-3 mt-12">
-          <h1 className={`${playfairDisplay.className} text-2xl`}>
-            {movie?.title}
-          </h1>
+        <div className="border glases border-white/10 w-full lg:w-1/3 p-2 lg:p-5 rounded-lg z-10 min-h-64 text-light-50 space-y-3 mt-12">
+          <h1 className="font-playfair text-2xl">{movie?.title}</h1>
           <div className="rating genre space-y-2">
             <div className="flex gap-2 text-xs font-medium">
               <p className="flex gap-1 items-center">
@@ -87,7 +79,7 @@ async function page({ params }: { params: { movieId: string } }) {
             </div>
             <Genre genreId={movie?.genre} textSize="text-xs" gap={2} />
           </div>
-          <div className="director-actor text-xs  ">
+          <div className="director-actor text-xs">
             <p className="font-medium">
               <span className="text-dark-200">Director : </span>
               {movie?.director}
@@ -113,8 +105,10 @@ async function page({ params }: { params: { movieId: string } }) {
           <Stars />
         </div>
         <div className="flex gap-5 flex-col lg:flex-row">
-          {movie?.cast.length  && <Cast cast={movie?.cast} />}
-          {movie?.recommendations.length > 0 && <Recomendations recomendations={movie?.recommendations} />}
+          {movie?.cast.length && <Cast cast={movie?.cast} />}
+          {movie?.recommendations.length > 0 && (
+            <Recomendations recomendations={movie?.recommendations} />
+          )}
         </div>
       </div>
     </div>

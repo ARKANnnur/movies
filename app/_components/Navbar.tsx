@@ -3,24 +3,17 @@ import { CiMenuFries } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 
 import React, { useEffect, useState } from "react";
-import { Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import Search from "@/_components//Search";
 
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
-type Props = {};
-
-function Navbar({}: Props) {
+function Navbar() {
   const [navBackground, setNavBackground] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY >= 200) {
+      if (window.scrollY >= 50) {
         setNavBackground(true);
       } else {
         setNavBackground(false);
@@ -36,7 +29,7 @@ function Navbar({}: Props) {
 
   return (
     <div
-      className={`${playfairDisplay.className} ${
+      className={`font-playfair ${
         navBackground
           ? "bg-slate-900/40 border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md"
           : ""

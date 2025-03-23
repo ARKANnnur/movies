@@ -47,9 +47,7 @@ function Highlight({ highlight }: { highlight: LastEpisode }) {
           <FaClapperboard className="ml-2 h-3 w-3 text-light-50 -translate-y-[1px]" />
         </div>
         <div className="w-2/3 text-end self-end p-2 lg:p-5">
-          <h2 className={`${playfairDisplay.className} text-2xl`}>
-            {highlight?.name}
-          </h2>
+          <h2 className="font-playfair text-2xl">{highlight?.name}</h2>
           <div className="flex gap-x-2 justify-end text-sm">
             <p className="flex gap-1 items-center">
               {highlight?.rating}

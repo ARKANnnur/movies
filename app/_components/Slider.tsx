@@ -3,7 +3,6 @@
 import { useSwipeable } from "react-swipeable";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Playfair_Display } from "next/font/google";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
 import Genre from "@/_components/Genre";
@@ -11,10 +10,6 @@ import textLimit from "@/_utils/textLimit";
 import Loading from "@/loading";
 import Link from "next/link";
 
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 type Movie = {
   id: number;
@@ -112,7 +107,7 @@ function Slider() {
               transition={{ duration: 0.5 }}
               className="absolute bottom-0 left-0 px-5 pl-10 py-2 md:w-1/2 lg:w-1/3 space-y-2 text-base z-20"
             >
-              <h1 className={`${playfairDisplay.className} text-4xl`}>
+              <h1 className='font-playfair text-4'>
                 {moviesData[countData]?.title}
               </h1>
               <div className="flex gap-2 text-sm font-medium">

@@ -24,6 +24,10 @@ export default {
           500: "#FF47E6",
         },
       },
+      fontFamily: {
+        roboto: "var(--font-roboto)",
+        playfair: "var(--font-playfair)",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

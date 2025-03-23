@@ -44,7 +44,7 @@ function Episode({
           {[...Array(seasonCount)].map((_, index) => (
             <button
               key={index + 1}
-              className={`px-4 py-2 border glases  rounded-xl ${
+              className={`px-4 py-2 border glases  rounded-lg ${
                 seasonNumber === index + 1
                   ? "border-yellow-500/50 text-yellow-500"
                   : "border-white/10"

@@ -1,10 +1,17 @@
 import Navbar from "@/_components/Navbar";
-import { Roboto } from "next/font/google";
+import { Roboto, Playfair_Display } from "next/font/google";
 import "@/_styles/globals.css";
 
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["300", "400", "700", "900"],
+  variable: "--font-roboto",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-playfair",
 });
 
 export const metadata = {
@@ -23,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} bg-dark-50 h-auto text-light-50`}>
+      <body
+        className={`${roboto.variable} ${playfairDisplay.variable} font-roboto bg-dark-50 h-auto text-light-50`}
+      >
         <Navbar />
         {children}
       </body>

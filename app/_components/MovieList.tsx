@@ -1,6 +1,5 @@
 "use client";
 
-import { Playfair_Display } from "next/font/google";
 import {
   useEffect,
   useState,
@@ -15,11 +14,6 @@ import Link from "next/link";
 import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import textLimit from "@/_utils/textLimit";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -123,9 +117,7 @@ MovieList.Filter = function MovieListFilter() {
   if (!context) throw new Error("MovieList.Filter must us in MovieList!");
 
   return (
-    <div
-      className={`${playfairDisplay.className} flex gap-5 items-center text-2xl w-full overflow-y-scroll sm:overflow-y-clip`}
-    >
+    <div className="font-playfair flex gap-5 items-center text-2xl w-full overflow-y-scroll sm:overflow-y-clip">
       {context.title && <h2>{context.title}</h2>}
       {!!context.filterName?.length && (
         <Filter
@@ -206,9 +198,7 @@ MovieList.Card = function MovieListCard({
                 />
               </div>
             </div>
-            <p
-              className={`${playfairDisplay.className} mt-2 text-base font-medium transition-all`}
-            >
+            <p className="font-playfair mt-2 text-base font-medium transition-all">
               {movie.title || movie.name}
             </p>
           </Link>

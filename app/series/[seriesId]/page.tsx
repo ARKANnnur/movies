@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Playfair_Display } from "next/font/google";
 import { FaStar, FaRegCalendarAlt } from "react-icons/fa";
 import { FaClapperboard } from "react-icons/fa6";
 import Stars from "@/_components/StarRating";
@@ -7,11 +6,6 @@ import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import SubBar from "@/_components/series/SubBar";
 import Highlight from "@/_components/series/Highlight";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -75,10 +69,8 @@ async function page({ params }: { params: { seriesId: string } }) {
       </div>
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
         <div className="gap-5 flex flex-col p-5 lg:min-h-dvh pt-12 w-full lg:w-1/3">
-          <div className="border glases border-white/10 w-full p-2 lg:p-5 rounded-xl z-10 h-auto text-light-50 space-y-3 mt-12">
-            <h1 className={`${playfairDisplay.className} text-2xl`}>
-              {series?.name}
-            </h1>
+          <div className="border glases border-white/10 w-full p-2 lg:p-5 rounded-lg z-10 h-auto text-light-50 space-y-3 mt-12">
+            <h1 className="font-playfair text-2xl">{series?.name}</h1>
             <div className="rating genre space-y-2">
               <div className="flex gap-2 text-xs font-medium items-center">
                 <p className="flex gap-1 items-center">

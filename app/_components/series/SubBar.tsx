@@ -125,24 +125,24 @@ function SubBar({ id, season }: Props) {
 
   return (
     <div className="p-5 lg:pt-24 lg:p-0 flex-1 z-10 w-full">
-      <div className="border glases border-white/10 rounded-xl p-2 flex flex-wrap gap-2 h-fit w-fit mb-2">
+      <div className="border glases border-white/10 rounded-lg p-2 flex flex-wrap gap-2 h-fit w-fit mb-2">
         <div
           onClick={() => setBar("episode")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
+          className="border glases border-white/10 rounded-lg p-2 cursor-pointer flex items-center gap-x-2"
         >
           <MdMovie className="size-4" />
           <p>Episode</p>
         </div>
         <div
           onClick={() => setBar("recommendations")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
+          className="border glases border-white/10 rounded-lg p-2 cursor-pointer flex items-center gap-x-2"
         >
           <IoMdFilm className="size-4" />
           <p>Recommendations</p>
         </div>
         <div
           onClick={() => setBar("similiar")}
-          className="border glases border-white/10 rounded-xl p-2 cursor-pointer flex items-center gap-x-2"
+          className="border glases border-white/10 rounded-lg p-2 cursor-pointer flex items-center gap-x-2"
         >
           <PiFilmScript className="size-4" />
           <p>Similiar</p>

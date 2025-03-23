@@ -58,7 +58,7 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
               <div className="col-span-2 p-4 flex flex-col justify-between bg-gradient-to-r from-zinc-900 to-zinc-800/30 text-white overflow-y-auto scroll-thin overflow-x-hidden gap-y-2">
                 <div>
                   <div className="flex justify-between items-start">
-                    <h3 className="font-bold">{episode.name}</h3>
+                    <h3 className="font-bold font-playfair">{episode.name}</h3>
                     <span className="bg-yellow-500 text-black text-xs font-semibold px-2 py-1 rounded text-nowrap">
                       Ep {episode.episodeNumber}
                     </span>

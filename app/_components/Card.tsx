@@ -3,12 +3,6 @@ import { FaStar } from "react-icons/fa";
 import Genre from "./Genre";
 import textLimit from "@/_utils/textLimit";
 import Image from "next/image";
-import { Playfair_Display } from "next/font/google";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-});
 
 type Item = {
   id: number;
@@ -69,9 +63,7 @@ function Card({
           />
         </div>
       </div>
-      <p
-        className={`${playfairDisplay.className} mt-2 text-base font-medium transition-all`}
-      >
+      <p className="font-playfair mt-2 text-base font-medium transition-all">
         {item.title || item.name}
       </p>
     </Link>
