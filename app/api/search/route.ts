@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
   try {
     const res = await fetch(
-      `${baseUrl}/search/movie?query=${search}&include_adult=false&language=en-US&page=1`,
+      `${baseUrl}/search/multi?query=${search}&include_adult=false&language=en-US&page=1`,
       {
         headers: {
           accept: "application/json",

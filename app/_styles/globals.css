@@ -55,6 +55,15 @@ html {
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
 }
+.bg-filter {
+  /* From https://css.glass */
+  background: rgba(179, 46, 179, 0.29);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(179, 46, 179, 0.3);
+}
 .bg-gradient {
   box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 10px 5px 0px rgba(0, 0, 0, 0.3);
@@ -142,6 +151,11 @@ html {
 }
 
 .clip-path-polygon-\[0_0\,_100\%_0\,_100\%_calc$$100\%_-_2rem$$\,_calc$$100\%_-_2rem$$_100\%\,_0_100\%\] {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 2rem),
+    calc(100% - 2rem) 100%,
+    0 100%
+  );
 }
-

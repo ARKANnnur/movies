@@ -104,7 +104,7 @@ function MovieList({ title, filterName = [], children }: MovieListProps) {
         setFilterPick,
       }}
     >
-      <div className="text-light-50 py-5 pl-10 w-auto h-full bg-scroller">
+      <div className="text-light-50 py-5 pl-5 lg:pl-10 w-auto h-full bg-scroller">
         {children}
       </div>
     </MovieListContext.Provider>

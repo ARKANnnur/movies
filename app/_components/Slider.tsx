@@ -10,7 +10,6 @@ import textLimit from "@/_utils/textLimit";
 import Loading from "@/loading";
 import Link from "next/link";
 
-
 type Movie = {
   id: number;
   title: string;
@@ -23,7 +22,10 @@ type Movie = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function Slider() {
+function Slider({
+  size = "max-w-[100%] h-dvh sm:h-[30rem]",
+  recomemendation = false,
+}) {
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
   const [countData, setCountData] = useState(0);
   const [isLoading, setLoading] = useState(true);
@@ -66,7 +68,7 @@ function Slider() {
     <div
       {...handlers}
       key={moviesData[countData]?.id}
-      className="max-w-[100%] h-dvh sm:h-[30rem] relative overflow-hidden"
+      className={`${size} relative overflow-hidden`}
     >
       {isLoading ? (
         <Loading />
@@ -105,25 +107,31 @@ function Slider() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="absolute bottom-0 left-0 px-5 pl-10 py-2 md:w-1/2 lg:w-1/3 space-y-2 text-base z-20"
+              className={`absolute bottom-0 left-0 ${
+                recomemendation ? "pl-5 py-5" : "pl-5 lg:pl-10 py-2"
+              }  md:w-1/2 lg:w-1/3 space-y-2 text-base z-20`}
             >
-              <h1 className='font-playfair text-4'>
+              <h1 className="font-playfair text-4xl">
                 {moviesData[countData]?.title}
               </h1>
-              <div className="flex gap-2 text-sm font-medium">
-                <p className="flex gap-1 items-center">
-                  {moviesData[countData]?.rating}
-                  <span>
-                    <FaStar className="h-3 w-3 text-yellow-400" />
-                  </span>
-                </p>
-                <span>|</span>
-                <p>{moviesData[countData]?.releaseDate}</p>
-              </div>
-              <Genre genreId={moviesData[countData]?.genre} />
-              <p className="text-sm">
-                {textLimit(moviesData[countData]?.overview)}
-              </p>
+              {!recomemendation && (
+                <>
+                  <div className="flex gap-2 text-sm font-medium">
+                    <p className="flex gap-1 items-center">
+                      {moviesData[countData]?.rating}
+                      <span>
+                        <FaStar className="h-3 w-3 text-yellow-400" />
+                      </span>
+                    </p>
+                    <span>|</span>
+                    <p>{moviesData[countData]?.releaseDate}</p>
+                  </div>
+                  <Genre genreId={moviesData[countData]?.genre} />
+                  <p className="text-sm">
+                    {textLimit(moviesData[countData]?.overview)}
+                  </p>
+                </>
+              )}
             </motion.div>
           </Link>
           <div className="absolute bottom-1/3 sm:bottom-0 w-full h-10 flex justify-center items-center gap-5 z-20">

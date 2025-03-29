@@ -94,7 +94,7 @@ export default function Search() {
                 >
                   <Link
                     className="h-20 w-full flex items-center"
-                    href={`/movie/${movie?.id}`}
+                    href={movie?.title ? `/movie/${movie?.id}` : `/series/${movie?.id}`}
                     onClick={() => {
                       setIsOpen(false);
                     }}
