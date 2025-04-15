@@ -1,5 +1,13 @@
 import { StylesConfig } from "react-select";
 
+const hideScrollbarStyles = {
+  msOverflowStyle: "none",
+  scrollbarWidth: "none" as "none",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+};
+
 export const customStyles: StylesConfig = {
   control: (styles, state) => ({
     ...styles,
@@ -15,6 +23,8 @@ export const customStyles: StylesConfig = {
       color: "#ffff",
     },
     backgroundColor: "transparent",
+    position: "relative",
+    zIndex: 1,
   }),
   placeholder: (styles: any) => ({
     ...styles,
@@ -48,12 +58,34 @@ export const customStyles: StylesConfig = {
     borderRadius: "0",
     borderWidth: "0",
     padding: "5px",
+    "&::-webkit-scrollbar": {
+      width: "2px",
+      height: "2px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#b32eb3",
+      borderRadius: "0 25px 0 25px",
+      overflow: "hidden",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#c43ec4",
+    },
   }),
   menu: (styles) => ({
     ...styles,
     borderRadius: "0.5rem",
-    backgroundColor: "transparent",
+    backgroundColor: "#100F10",
     border: "1px solid #b32eb3",
+    position: "absolute",
+    overflowY: "hidden",
+    zIndex: 9999,
+  }),
+  menuPortal: (styles) => ({
+    ...styles,
+    zIndex: 9999,
   }),
 };
 
@@ -72,6 +104,8 @@ export const customStylesMultiple: StylesConfig = {
       color: "#ffff",
     },
     backgroundColor: "transparent",
+    position: "relative",
+    zIndex: 1,
   }),
   placeholder: (styles: any) => ({
     ...styles,
@@ -105,21 +139,44 @@ export const customStylesMultiple: StylesConfig = {
     borderRadius: "0",
     borderWidth: "0",
     padding: "5px",
+    "&::-webkit-scrollbar": {
+      width: "2px",
+      height: "2px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#b32eb3",
+      borderRadius: "0 25px 0 25px",
+      overflow: "hidden",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#c43ec4",
+    },
   }),
   menu: (styles) => ({
     ...styles,
     borderRadius: "0.5rem",
-    backgroundColor: "transparent",
+    backgroundColor: "#100F10",
     border: "1px solid #b32eb3",
+    position: "absolute",
+    overflowY: "hidden",
+    zIndex: 9999,
+  }),
+  menuPortal: (styles) => ({
+    ...styles,
+    zIndex: 9999,
   }),
   valueContainer: (styles: any) => ({
     ...styles,
-    display: "flex",
-    flexWrap: "nowrap",
-    overflowX: "auto",
+    overflow: "auto",
     whiteSpace: "nowrap",
     scrollbarWidth: "thin",
     scrollbarColor: "#b32eb3 #333",
+    flexWrap: "wrap",
+    maxHeight: "50px",
+    maxWidth: "25rem",
   }),
   multiValue: (styles) => ({
     ...styles,

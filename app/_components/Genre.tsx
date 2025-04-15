@@ -21,7 +21,7 @@ function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
         const cachedGenres = localStorage.getItem("genres");
 
         if (cachedGenres) {
-          setGenreName(JSON.parse(cachedGenres));
+          setGenreName(JSON.parse(cachedGenres)?.genres);
           setIsLoading(false);
           return;
         }
@@ -32,7 +32,7 @@ function Genre({ genreId, textSize = "text-base", gap = "5" }: any) {
 
         const data = await res.json();
         setGenreName(data.genres);
-        localStorage.setItem("genres", JSON.stringify(data.genres));
+        localStorage.setItem("genres", JSON.stringify(data));
       } catch (err) {
         console.log(err);
       } finally {

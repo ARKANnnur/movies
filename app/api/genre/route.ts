@@ -28,7 +28,7 @@ export async function GET() {
         tvRes.json(),
       ]);
 
-      const mergedGenres = { ...movieData };
+      const mergedGenres = { ...movieData, genreMovie: movieData.genres, genreTv: tvData.genres };
 
       tvData.genres.forEach((tvGenre: { id: number; name: string }) => {
         if (
