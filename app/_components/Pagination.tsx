@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaArrowDown } from "react-icons/fa6";
 import Types from "./Types";
 

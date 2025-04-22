@@ -7,7 +7,7 @@ import Image from "next/image";
 type Item = {
   id: number;
   title?: string;
-  name: string;
+  name?: string;
   overview: string;
   genre: number[];
   rating: number;
@@ -56,7 +56,7 @@ function Card({
         <div className="group-hover:h-2/3 relative h-2/3 lg:size-full transition-all z-10">
           <Image
             src={`https://image.tmdb.org/t/p/w300${item?.poster}`}
-            alt={item.title || item.name}
+            alt={item.title || item.name || "Image"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             className="bg-center bg-cover"

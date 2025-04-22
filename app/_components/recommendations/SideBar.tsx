@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaFilm, FaTv } from "react-icons/fa";
 import { SiFoodpanda } from "react-icons/si";
@@ -10,6 +9,7 @@ type SidebarItemType = {
   id: string;
   icon: JSX.Element;
   text: string;
+  type: string;
 };
 
 type SidebarItemProps = {
@@ -18,21 +18,40 @@ type SidebarItemProps = {
   onClick: () => void;
 };
 
-function SideBar() {
-  const [active, setActive] = useState<string | null>("movies");
-
+function SideBar({
+  active,
+  handleActive,
+}: {
+  active: string | null;
+  handleActive: (id: string, type: string) => void;
+}) {
   const categories: SidebarItemType[] = [
-    { id: "movies", icon: <FaFilm />, text: "Movies" },
-    { id: "series", icon: <FaTv />, text: "Series" },
-    { id: "cartoon", icon: <SiFoodpanda />, text: "Cartoon" },
+    { id: "movies", icon: <FaFilm />, text: "Movies", type: "movie" },
+    { id: "series", icon: <FaTv />, text: "Series", type: "tv" },
+    { id: "cartoon", icon: <SiFoodpanda />, text: "Cartoon", type: "movie" },
   ];
 
   const regions: SidebarItemType[] = [
-    { id: "hollywood", icon: <RiMovie2Line />, text: "Hollywood" },
-    { id: "bollywood", icon: <RiMovie2Line />, text: "Bollywood" },
-    { id: "korean", icon: <RiMovie2Line />, text: "Korean" },
-    { id: "chinese", icon: <RiMovie2Line />, text: "Chinese" },
-    { id: "indonesian", icon: <RiMovie2Line />, text: "Indonesian" },
+    {
+      id: "hollywood",
+      icon: <RiMovie2Line />,
+      text: "Hollywood",
+      type: "movie",
+    },
+    {
+      id: "bollywood",
+      icon: <RiMovie2Line />,
+      text: "Bollywood",
+      type: "movie",
+    },
+    { id: "korean", icon: <RiMovie2Line />, text: "Korean", type: "movie" },
+    { id: "chinese", icon: <RiMovie2Line />, text: "Chinese", type: "movie" },
+    {
+      id: "indonesian",
+      icon: <RiMovie2Line />,
+      text: "Indonesian",
+      type: "movie",
+    },
   ];
 
   return (
@@ -49,7 +68,7 @@ function SideBar() {
             key={item.id}
             item={item}
             isActive={active === item.id}
-            onClick={() => setActive(item.id)}
+            onClick={() => handleActive(item.id, item.type)}
           />
         ))}
       </ul>
@@ -64,7 +83,7 @@ function SideBar() {
             key={item.id}
             item={item}
             isActive={active === item.id}
-            onClick={() => setActive(item.id)}
+            onClick={() => handleActive(item.id, item.type)}
           />
         ))}
       </ul>

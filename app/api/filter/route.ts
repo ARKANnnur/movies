@@ -5,19 +5,27 @@ export async function GET(request: Request) {
   const baseUrl = process.env.MOVIE_BASE_URL;
 
   const { searchParams } = new URL(request.url);
-  const search = searchParams.get("by") || "KR";
-  let filter = "";
-  if (search === "KR")
-    filter = `${baseUrl}/discover/movie?certification.lte=PG-13&vote_average.gte=7&R&without_genres=10749&language=en-US&page=1&sort_by=popularity.desc&with_origin_country=KR`;
-  if (search === "CN")
-    filter = `${baseUrl}/discover/movie?certification.lte=PG-13&vote_average.gte=7&R&without_genres=10749&language=en-US&page=1&sort_by=popularity.desc&with_origin_country=CN`;
-  if (search === "JP")
-    filter = `${baseUrl}/discover/movie?certification.lte=PG-13&vote_average.gte=7&R&without_genres=10749&language=en-US&page=1&sort_by=popularity.desc&with_genres=16&with_origin_country=JP`;
-  if (search === "CR")
-    filter = `${baseUrl}/discover/movie?certification.lte=PG-13&vote_average.gte=7&R&without_genres=10749&language=en-US&page=1&sort_by=popularity.desc&with_genres=16`;
+  const type = searchParams.get("type") || "movie";
+  const region = searchParams.get("region");
+  const sortBy = searchParams.get("sortBy");
+  const genres = searchParams.get("genres");
+  const releaseDate = searchParams.get("releaseDate");
+  const rating = searchParams.get("rating");
+  const studio = searchParams.get("studio");
+  const page = searchParams.get("page") || "1";
+  console.log(type, "type");
+
+  let query = `${baseUrl}/discover/${type}?language=en-US&page=${page}&certification.lte=PG-13&without_genres=10749`;
+
+  if (rating) query += `&vote_average.gte=${rating}`;
+  if (sortBy) query += `&sort_by=${sortBy}`;
+  if (region) query += `&with_origin_country=${region}`;
+  if (genres) query += `&with_genres=${genres}`;
+  if (releaseDate) query += `&primary_release_year=${releaseDate}`;
+  if (studio) query += `&with_companies=${studio}`;
 
   try {
-    const res = await fetch(filter, {
+    const res = await fetch(query, {
       headers: {
         accept: "application/json",
         Authorization: `Bearer ${apiKey}`,
@@ -33,6 +41,7 @@ export async function GET(request: Request) {
       (movie: {
         id: number;
         title: string;
+        name: string;
         overview: string;
         poster_path: string;
         release_date: string;
@@ -41,6 +50,7 @@ export async function GET(request: Request) {
       }) => ({
         id: movie.id,
         title: movie.title,
+        name: movie.name,
         overview: movie.overview,
         poster: movie.poster_path,
         releaseDate: movie.release_date,
@@ -53,7 +63,7 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Error fetching API:", error);
     return NextResponse.json(
-      { error: "Failed to fetch data", search },
+      { error: "Failed to fetch data" },
       { status: 500 }
     );
   }

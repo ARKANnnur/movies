@@ -63,7 +63,7 @@ function Navbar() {
               } absolute right-0 sm:flex sm:relative sm:gap-5 bg-slate-900/40 border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md p-2 rounded-lg sm:rounded-none sm:border-none sm:bg-transparent sm:backdrop-blur-none sm:bg-blend-normal`}
             >
               <li className="">
-                <Link href={"/recomendation"}>Recomendation</Link>
+                <Link href={"/recomendation?type=movie"}>Recomendation</Link>
               </li>
               <li className="">
                 <Link href={"/bookmark"}>Bookmark</Link>

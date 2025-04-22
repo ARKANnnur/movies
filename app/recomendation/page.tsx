@@ -1,13 +1,25 @@
 "use client";
 
+import Card from "@/_components/Card";
 import Sidebar from "@/_components/recommendations/SideBar";
 import Slider from "@/_components/Slider";
 import { customStyles, customStylesMultiple } from "@/_styles/Select";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
+import { FaArrowDown } from "react-icons/fa6";
 import Select from "react-select";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+type Datas = {
+  id: number;
+  title: string;
+  overview: string;
+  genre: number[];
+  rating: number;
+  releaseDate: string;
+  poster: string;
+};
 
 interface OptionType {
   value: string;
@@ -18,14 +30,76 @@ const regionOptions: OptionType[] = [
   { value: "US", label: "United States" },
   { value: "JP", label: "Japan" },
   { value: "KR", label: "South Korea" },
+  { value: "CN", label: "China" },
+  { value: "ID", label: "Indonesia" },
+  { value: "IN", label: "India" },
+  { value: "GB", label: "United Kingdom" },
+  { value: "DE", label: "Germany" },
+  { value: "IT", label: "Italy" },
+  { value: "ES", label: "Spain" },
+  { value: "FR", label: "France" },
+  { value: "BR", label: "Brazil" },
+  { value: "RU", label: "Russia" },
+  { value: "MX", label: "Mexico" },
+  { value: "AR", label: "Argentina" },
+  { value: "NL", label: "Netherlands" },
+  { value: "SE", label: "Sweden" },
+  { value: "PL", label: "Poland" },
+  { value: "TR", label: "Turkey" },
+  { value: "TH", label: "Thailand" },
+  { value: "PH", label: "Philippines" },
+  { value: "ZA", label: "South Africa" },
+  { value: "NO", label: "Norway" },
+  { value: "FI", label: "Finland" },
+  { value: "DK", label: "Denmark" },
+  { value: "IE", label: "Ireland" },
+  { value: "PT", label: "Portugal" },
+  { value: "BE", label: "Belgium" },
+  { value: "AT", label: "Austria" },
+  { value: "CH", label: "Switzerland" },
+  { value: "GR", label: "Greece" },
+  { value: "CZ", label: "Czech Republic" },
+  { value: "HU", label: "Hungary" },
+  { value: "RO", label: "Romania" },
+  { value: "SK", label: "Slovakia" },
+  { value: "BG", label: "Bulgaria" },
+  { value: "HR", label: "Croatia" },
+  { value: "SI", label: "Slovenia" },
+  { value: "LT", label: "Lithuania" },
+  { value: "LV", label: "Latvia" },
+  { value: "EE", label: "Estonia" },
+  { value: "IS", label: "Iceland" },
+  { value: "BY", label: "Belarus" },
+  { value: "UA", label: "Ukraine" },
+  { value: "MD", label: "Moldova" },
+  { value: "KZ", label: "Kazakhstan" },
+  { value: "UZ", label: "Uzbekistan" },
+  { value: "AZ", label: "Azerbaijan" },
+  { value: "GE", label: "Georgia" },
+  { value: "AM", label: "Armenia" },
+  { value: "KG", label: "Kyrgyzstan" },
+  { value: "TJ", label: "Tajikistan" },
+  { value: "TM", label: "Turkmenistan" },
+  { value: "MN", label: "Mongolia" },
+  { value: "VN", label: "Vietnam" },
+  { value: "MY", label: "Malaysia" },
+  { value: "SG", label: "Singapore" },
+  { value: "LA", label: "Laos" },
+  { value: "MM", label: "Myanmar" },
+  { value: "BN", label: "Brunei" },
+  { value: "KH", label: "Cambodia" },
+  { value: "LK", label: "Sri Lanka" },
+  { value: "BD", label: "Bangladesh" },
+  { value: "NP", label: "Nepal" },
+  { value: "PK", label: "Pakistan" },
   { value: "FR", label: "France" },
 ];
 
 const sortByOptions: OptionType[] = [
-  { value: "popularity.desc", label: "Popularity Desc" },
   { value: "popularity.asc", label: "Popularity Asc" },
-  { value: "release_date.desc", label: "Newest First" },
+  { value: "popularity.desc", label: "Popularity Desc" },
   { value: "release_date.asc", label: "Oldest First" },
+  { value: "release_date.desc", label: "Newest First" },
 ];
 
 const releaseDateOptions: OptionType[] = [
@@ -43,8 +117,15 @@ const ratingOptions: OptionType[] = [
 
 const studioOptions: OptionType[] = [
   { value: "420", label: "Marvel Studios" },
-  { value: "9993", label: "Warner Bros" },
-  { value: "2", label: "Paramount Pictures" },
+  { value: "174", label: "Warner Bros. Pictures" },
+  { value: "2", label: "Walt Disney Pictures" },
+  { value: "4", label: "Paramount Pictures" },
+  { value: "33", label: "Universal Pictures" },
+  { value: "25", label: "20th Century Studios" },
+  { value: "3", label: "Pixar" },
+  { value: "21", label: "Metro-Goldwyn-Mayer (MGM)" },
+  { value: "5", label: "Columbia Pictures" },
+  { value: "34", label: "New Line Cinema" },
 ];
 
 // Definisi State
@@ -68,7 +149,8 @@ type FilterAction =
   | { type: "SET_SELECTED_GENRES"; payload: OptionType[] | null }
   | { type: "SET_RELEASE_DATE"; payload: OptionType | null }
   | { type: "SET_RATING"; payload: OptionType | null }
-  | { type: "SET_STUDIO"; payload: OptionType | null };
+  | { type: "SET_STUDIO"; payload: OptionType | null }
+  | { type: "SET_RESET" };
 
 type FilterActionType =
   | "SET_REGION"
@@ -100,12 +182,24 @@ const filterReducer = (
       return { ...state, rating: action.payload };
     case "SET_STUDIO":
       return { ...state, studio: action.payload };
+    case "SET_RESET":
+      return {
+        ...state,
+        region: null,
+        sortBy: null,
+        genres: [],
+        selectedGenres: null,
+        releaseDate: null,
+        rating: null,
+        studio: null,
+      };
     default:
       return state;
   }
 };
 
-function Page() {
+function Page({}) {
+  const router = useRouter();
   const [state, dispatch] = useReducer(filterReducer, {
     loading: false,
     region: null,
@@ -116,56 +210,122 @@ function Page() {
     rating: null,
     studio: null,
   });
+  const [datas, setDatas] = useState<Datas[]>();
+  const [refreshFilter, setRefreshFilter] = useState<string>("");
   const [isMounted, setIsMounted] = useState(false);
+  const [active, setActive] = useState<string | null>("movies");
+  const [page, setPage] = useState<number>(1);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  const handleActive = (id: string, type: string) => {
+    setActive(id);
+    setPage(1);
+    setDatas([]);
+    dispatch({ type: "SET_RESET" });
+    const params = new URLSearchParams();
+
+    params.set("page", "1");
+    params.set("tab", id);
+    params.set("type", type);
+    if (id === "cartoon") {
+      params.set("genres", "16");
+    } else {
+      params.delete("genres");
+    }
+    if (id === "hollywood") params.set("region", "US");
+    if (id === "bollywood") params.set("region", "IN");
+    if (id === "korean") params.set("region", "KR");
+    if (id === "chinese") params.set("region", "CN");
+    if (id === "indonesian") params.set("region", "ID");
+
+    router.replace(`?${params.toString()}`);
+    setRefreshFilter(params.toString());
+  };
 
   useEffect(() => {
     setIsMounted(true);
+    const params = new URLSearchParams(window.location.search);
+    setActive(params.get("tab") || "movies");
   }, []);
 
-  const router = useRouter();
   const handleSetFilterUrl = (
     options: OptionType[],
     settings: FilterActionType,
     name: string
   ) => {
+    // get current value in state
+    const currentValue = state[name as keyof FilterState] as
+      | OptionType
+      | OptionType[]
+      | null;
+
+    // For multiple (genre), we are immediately dispatched and URL update
     if (settings === "SET_SELECTED_GENRES") {
-      dispatch({ type: settings, payload: options });
-    } else {
-      dispatch({ type: settings, payload: options[0] });
+      const selected = options as OptionType[];
+      dispatch({ type: settings, payload: selected });
+
+      const query = selected.map((g) => g.value).join(",");
+      const params = new URLSearchParams(window.location.search);
+
+      if (query) {
+        params.set(name, query);
+      } else {
+        params.delete(name);
+      }
+
+      router.replace(`?${params.toString()}`);
+      setRefreshFilter(params.toString());
+      return;
     }
 
-    console.log("Selected option:", options);
+    // for single select
+    const selected = options[0] as OptionType;
 
-    const query = options.map((g) => g.value).join(",");
+    // If the value is the same as before, remove from URL & reset state
+    if ((currentValue as OptionType)?.value === selected?.value) {
+      dispatch({ type: settings, payload: null });
+
+      const params = new URLSearchParams(window.location.search);
+      params.delete(name);
+
+      router.replace(`?${params.toString()}`);
+      setRefreshFilter(params.toString());
+      return;
+    }
+
+    // If different, set as usual
+    dispatch({ type: settings, payload: selected });
 
     const params = new URLSearchParams(window.location.search);
-    params.set(name, query);
+    params.set(name, selected.value);
 
     router.replace(`?${params.toString()}`);
+    setRefreshFilter(params.toString());
   };
 
+  //get Genres
   useEffect(() => {
+    const cachedGenres = localStorage.getItem("genres");
+    const parsed = cachedGenres ? JSON.parse(cachedGenres) : null;
+
+    if (cachedGenres) {
+      const convertGenres = parsed.genreMovie.map(
+        ({ id, name }: { id: number; name: string }) => ({
+          value: id,
+          label: name,
+        })
+      );
+      dispatch({
+        type: "SET_GENRES",
+        payload: convertGenres,
+      });
+      dispatch({ type: "LOADING", payload: false });
+      console.log(convertGenres);
+      return;
+    }
     async function getGenre() {
       try {
         dispatch({ type: "LOADING", payload: true });
-        const cachedGenres = localStorage.getItem("genres");
-        const parsed = cachedGenres ? JSON.parse(cachedGenres) : null;
-
-        if (cachedGenres) {
-          const convertGenres = parsed.genreMovie.map(
-            ({ id, name }: { id: number; name: string }) => ({
-              value: id,
-              label: name,
-            })
-          );
-          dispatch({
-            type: "SET_GENRES",
-            payload: convertGenres,
-          });
-          dispatch({ type: "LOADING", payload: false });
-          console.log(convertGenres);
-          return;
-        }
 
         const res = await fetch(`${API_URL}/genre`);
 
@@ -187,14 +347,80 @@ function Page() {
       }
     }
 
-    getGenre();
+    if (!cachedGenres) getGenre();
   }, []);
-  console.log(state.genres);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (!refreshFilter) {
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`);
+    }
+
+    async function getDatasFilter() {
+      try {
+        dispatch({ type: "LOADING", payload: true });
+
+        const res = await fetch(
+          `${API_URL}/filter?${
+            refreshFilter ? refreshFilter : params.toString()
+          }`
+        );
+
+        if (!res.ok) throw new Error("Network response was not ok");
+
+        const data = await res.json();
+        setDatas(page === 1 ? data : [...(datas || []), ...data]);
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        dispatch({ type: "LOADING", payload: false });
+      }
+    }
+
+    getDatasFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshFilter, page]);
+
+  function handleResetFilter() {
+    const params = new URLSearchParams(window.location.search);
+    const typeValue = params.get("type");
+
+    const newParams = new URLSearchParams();
+    if (typeValue) {
+      newParams.set("type", typeValue);
+    }
+    router.replace(`?${newParams.toString()}`);
+    dispatch({ type: "SET_RESET" });
+  }
+
+  function loadMore() {
+    setPage((prev) => prev + 1);
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", String(page + 1));
+    router.replace(`?${params.toString()}`);
+    setRefreshFilter(params.toString());
+
+    setTimeout(() => {
+      loadMoreRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 500);
+  }
+
+  const showRegion =
+    active !== "hollywood" &&
+    active !== "korean" &&
+    active !== "bollywood" &&
+    active !== "chinese" &&
+    active !== "indonesian";
 
   return (
     <div className="flex justify-between pt-24 gap-5 px-5 sm:px-10 min-h-[200dvh]">
       <div>
-        <Sidebar />
+        <Sidebar active={active} handleActive={handleActive} />
       </div>
       <div className="container">
         <div className="rounded-xl overflow-hidden h-[50dvh]">
@@ -202,18 +428,24 @@ function Page() {
         </div>
         <div className="flex items-start flex-wrap mt-4 gap-4">
           {/* Region */}
-          <Select
-            className="min-w-[10rem] bg-filter text-light-50 rounded-md"
-            options={regionOptions}
-            value={state.region}
-            onChange={(option) =>
-              handleSetFilterUrl([option as OptionType], "SET_REGION", "region")
-            }
-            placeholder="Region"
-            styles={customStyles}
-            menuPortalTarget={isMounted ? document.body : undefined}
-            menuPosition="fixed"
-          />
+          {showRegion && (
+            <Select
+              className="min-w-[10rem] bg-filter text-light-50 rounded-md"
+              options={regionOptions}
+              value={state.region}
+              onChange={(option) =>
+                handleSetFilterUrl(
+                  [option as OptionType],
+                  "SET_REGION",
+                  "region"
+                )
+              }
+              placeholder="Region"
+              styles={customStyles}
+              menuPortalTarget={isMounted ? document.body : undefined}
+              menuPosition="fixed"
+            />
+          )}
 
           {/* Sort By */}
           <Select
@@ -298,10 +530,41 @@ function Page() {
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
           />
+
+          <button
+            onClick={handleResetFilter}
+            className="bg-[#a12f5c] hover:bg-[#702741] min-h-full text-white px-4 py-2 rounded-md"
+          >
+            Reset All Filter
+          </button>
         </div>
-        <div className="">
-          
-        </div>
+        {state?.loading ? (
+          <div className="w-full flex justify-center mt-12">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <div
+            ref={loadMoreRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4"
+          >
+            {datas?.map((data) => (
+              <Card
+                item={data}
+                key={data.id}
+                parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"
+                size="h-[20rem] md:h-[28rem] lg:h-[20rem]"
+              />
+            ))}
+          </div>
+        )}
+        {!state?.loading && (
+          <div className="py-5 w-full flex justify-center">
+            <FaArrowDown
+              className="w-5 h-5 text-white cursor-pointer"
+              onClick={() => loadMore()}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
