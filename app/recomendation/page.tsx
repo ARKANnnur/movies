@@ -418,7 +418,7 @@ function Page({}) {
     active !== "indonesian";
 
   return (
-    <div className="flex justify-between pt-24 gap-5 px-5 sm:px-10 min-h-[200dvh]">
+    <div className="flex lg:justify-between pt-24 px-4 lg:gap-5 sm:px-10 min-h-[200dvh] relative">
       <div>
         <Sidebar active={active} handleActive={handleActive} />
       </div>
@@ -426,7 +426,7 @@ function Page({}) {
         <div className="rounded-xl overflow-hidden h-[50dvh]">
           <Slider size="h-[50dvh] rounded-xl" recomemendation={true} />
         </div>
-        <div className="flex items-start flex-wrap mt-4 gap-4">
+        <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4">
           {/* Region */}
           {showRegion && (
             <Select
@@ -467,7 +467,7 @@ function Page({}) {
 
           {/* Genres (Multiple) */}
           <Select
-            className="grow max-w-[25rem] bg-filter text-light-50 rounded-md"
+            className="grow min-w-[10rem] sm:max-w-[25rem] bg-filter text-light-50 rounded-md"
             options={state?.genres || []}
             isLoading={state.loading}
             value={state?.selectedGenres}
@@ -533,7 +533,7 @@ function Page({}) {
 
           <button
             onClick={handleResetFilter}
-            className="bg-[#a12f5c] hover:bg-[#702741] min-h-full text-white px-4 py-2 rounded-md"
+            className="bg-[#a12f5c] hover:bg-[#702741] min-h-full text-white px-4 py-2 rounded-md text-nowrap"
           >
             Reset All Filter
           </button>
@@ -543,10 +543,7 @@ function Page({}) {
             <div className="loader"></div>
           </div>
         ) : (
-          <div
-            ref={loadMoreRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4">
             {datas?.map((data) => (
               <Card
                 item={data}
@@ -558,7 +555,7 @@ function Page({}) {
           </div>
         )}
         {!state?.loading && (
-          <div className="py-5 w-full flex justify-center">
+          <div ref={loadMoreRef} className="py-5 w-full flex justify-center">
             <FaArrowDown
               className="w-5 h-5 text-white cursor-pointer"
               onClick={() => loadMore()}

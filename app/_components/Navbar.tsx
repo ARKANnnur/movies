@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Search from "@/_components//Search";
 
-
 function Navbar() {
   const [navBackground, setNavBackground] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -62,6 +61,9 @@ function Navbar() {
                 isOpen ? "block" : "hidden"
               } absolute right-0 sm:flex sm:relative sm:gap-5 bg-slate-900/40 border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md p-2 rounded-lg sm:rounded-none sm:border-none sm:bg-transparent sm:backdrop-blur-none sm:bg-blend-normal`}
             >
+              <li className="block sm:hidden">
+                <Link href={"/"}>Movies</Link>
+              </li>
               <li className="">
                 <Link href={"/recomendation?type=movie"}>Recomendation</Link>
               </li>

@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { FaFilm, FaTv } from "react-icons/fa";
 import { SiFoodpanda } from "react-icons/si";
 import { RiMovie2Line } from "react-icons/ri";
+import { IoHomeSharp } from "react-icons/io5";
+import { useState } from "react";
+import { IoMdClose } from "react-icons/io";
 
 type SidebarItemType = {
   id: string;
@@ -25,6 +28,7 @@ function SideBar({
   active: string | null;
   handleActive: (id: string, type: string) => void;
 }) {
+  const [show, setShow] = useState(false);
   const categories: SidebarItemType[] = [
     { id: "movies", icon: <FaFilm />, text: "Movies", type: "movie" },
     { id: "series", icon: <FaTv />, text: "Series", type: "tv" },
@@ -55,39 +59,55 @@ function SideBar({
   ];
 
   return (
-    <motion.div
-      className="py-4 px-2 backdrop-blur-lg rounded-xl sticky top-24 overflow-hidden"
-      initial={{ opacity: 0, x: -30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#b32eb3]/20 to-purple-900/10 backdrop-blur-xl -z-10"></div>
-      <ul className="space-y-2">
-        {categories.map((item) => (
-          <SidebarItem
-            key={item.id}
-            item={item}
-            isActive={active === item.id}
-            onClick={() => handleActive(item.id, item.type)}
+    <>
+      <div className="fixed top-2 left-2 bg-light-400/10 p-2 rounded-full border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md z-40 mt-24 mx-4 sm:mx-10 lg:hidden">
+        <IoHomeSharp
+          className="text-light-500 cursor-pointer"
+          onClick={() => setShow((prev) => !prev)}
+        />
+      </div>
+      <motion.div
+        className={`${
+          show ? "fixed top-0 left-0 bottom-0 z-50 w-full sm:w-1/2" : "hidden"
+        } lg:block py-4 px-2 backdrop-blur-lg rounded-xl lg:w-full lg:sticky top-24 overflow-hidden`}
+        initial={{ x: -300 }}
+        animate={{ x: 0 }}
+        transition={{ type: "tween", duration: 0.3 }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#b32eb3]/20 to-purple-900/10 backdrop-blur-xl -z-10"></div>
+        <div className="absolute top-2 right-2 bg-light-400/50 p-2 rounded-full border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md z-40 lg:hidden">
+          <IoMdClose
+            className="text-white cursor-pointer"
+            onClick={() => setShow((prev) => !prev)}
           />
-        ))}
-      </ul>
+        </div>
+        <ul className="space-y-2">
+          {categories.map((item) => (
+            <SidebarItem
+              key={item.id}
+              item={item}
+              isActive={active === item.id}
+              onClick={() => handleActive(item.id, item.type)}
+            />
+          ))}
+        </ul>
 
-      <h3 className="mt-6 mb-3 text-sm font-semibold text-white tracking-wide pl-3">
-        Region
-      </h3>
+        <h3 className="mt-6 mb-3 text-sm font-semibold text-white tracking-wide pl-3">
+          Region
+        </h3>
 
-      <ul className="space-y-2">
-        {regions.map((item) => (
-          <SidebarItem
-            key={item.id}
-            item={item}
-            isActive={active === item.id}
-            onClick={() => handleActive(item.id, item.type)}
-          />
-        ))}
-      </ul>
-    </motion.div>
+        <ul className="space-y-2">
+          {regions.map((item) => (
+            <SidebarItem
+              key={item.id}
+              item={item}
+              isActive={active === item.id}
+              onClick={() => handleActive(item.id, item.type)}
+            />
+          ))}
+        </ul>
+      </motion.div>
+    </>
   );
 }
 

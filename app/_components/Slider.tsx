@@ -134,7 +134,13 @@ function Slider({
               )}
             </motion.div>
           </Link>
-          <div className="absolute bottom-1/3 sm:bottom-0 w-full h-10 flex justify-center items-center gap-5 z-20">
+          <div
+            className={`absolute ${
+              recomemendation
+                ? "bottom-[10%] lg:bottom-0 "
+                : "bottom-1/3 sm:bottom-0 "
+            } w-full h-10 flex justify-center items-center gap-5 z-20`}
+          >
             <Button key="button-decrease" onClick={decrease} />
             <Button key="button-middleCrease" onClick={middleCrease} />
             <Button key="button-increase" onClick={increase} />
