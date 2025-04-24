@@ -11,6 +11,7 @@ type Props = {};
 
 const dataPaginations = [
   {
+    id: "1",
     filterBy: [
       {
         code: "KR",
@@ -31,6 +32,7 @@ const dataPaginations = [
     ],
   },
   {
+    id: "2",
     title: "Movie",
     filterBy: [
       { code: "day", name: "Today" },
@@ -42,6 +44,7 @@ const dataPaginations = [
   { title: "Horror 3" },
   { title: "Thriller 3" },
   {
+    id: "3",
     title: "Series",
     filterBy: [
       { code: "day", name: "Today" },
@@ -76,9 +79,14 @@ export default function Pagination({}: Props) {
             key={data.filterBy[0].name}
             filterName={data.filterBy}
             title={data.title}
+            id={data.id}
           />
         ) : data.filterBy ? (
-          <Types key={data.filterBy[0].name} filterName={data.filterBy} />
+          <Types
+            key={data.filterBy[0].name}
+            filterName={data.filterBy}
+            id={data.id}
+          />
         ) : (
           <Types key={data.title} title={data.title} />
         )

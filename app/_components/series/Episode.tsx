@@ -40,11 +40,11 @@ function Episode({
   return (
     <div className="min-w-dvw grow">
       {seasonCount > 1 ? (
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-3 overflow-x-auto scroll-thin-y pb-1">
           {[...Array(seasonCount)].map((_, index) => (
             <button
               key={index + 1}
-              className={`px-4 py-2 border glases  rounded-lg ${
+              className={`px-4 py-2 border glases text-nowrap rounded-lg ${
                 seasonNumber === index + 1
                   ? "border-yellow-500/50 text-yellow-500"
                   : "border-white/10"

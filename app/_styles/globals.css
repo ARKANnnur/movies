@@ -131,6 +131,9 @@ html {
 .scroll-thin-3 {
   @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-gray-300/50;
 }
+.scroll-thin-y {
+  @apply [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-gray-300/50;
+}
 
 @keyframes tilt {
   0%,

@@ -8,11 +8,13 @@ type FilterType = {
 };
 
 function Types({
+  id,
   title,
   filterName,
   parentSize = "min-h-72",
   size,
 }: {
+  id?: string;
   title?: string;
   filterName?: FilterType[];
   parentSize?: string;
@@ -20,7 +22,7 @@ function Types({
 }) {
   return (
     <div className={parentSize}>
-      <MovieList title={title} filterName={filterName}>
+      <MovieList id={id} title={title} filterName={filterName}>
         <MovieList.Filter />
         <MovieList.List>
           <MovieList.Card size={size} />

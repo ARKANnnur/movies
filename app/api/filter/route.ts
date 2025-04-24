@@ -9,11 +9,10 @@ export async function GET(request: Request) {
   const region = searchParams.get("region");
   const sortBy = searchParams.get("sortBy");
   const genres = searchParams.get("genres");
-  const releaseDate = searchParams.get("releaseDate");
+  const releaseDate = searchParams.get("releaseDate") || "2025";
   const rating = searchParams.get("rating");
   const studio = searchParams.get("studio");
   const page = searchParams.get("page") || "1";
-  console.log(type, "type");
 
   let query = `${baseUrl}/discover/${type}?language=en-US&page=${page}&certification.lte=PG-13&without_genres=10749`;
 
@@ -21,7 +20,11 @@ export async function GET(request: Request) {
   if (sortBy) query += `&sort_by=${sortBy}`;
   if (region) query += `&with_origin_country=${region}`;
   if (genres) query += `&with_genres=${genres}`;
-  if (releaseDate) query += `&primary_release_year=${releaseDate}`;
+  if (releaseDate)
+    query +=
+      type === "movie"
+        ? `&primary_release_year=${releaseDate}`
+        : `&first_air_date_year=${releaseDate}`;
   if (studio) query += `&with_companies=${studio}`;
 
   try {

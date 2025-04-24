@@ -37,6 +37,7 @@ type MovieListContextType = {
   dataTrending: Movie[];
   isLoading: boolean;
   title?: string;
+  id?: string;
   filterName?: FilterType[];
   filterPick: string;
   setFilterPick: (code: string) => void;
@@ -45,13 +46,14 @@ type MovieListContextType = {
 const MovieListContext = createContext<MovieListContextType | null>(null);
 
 type MovieListProps = {
+  id?: string;
   title?: string;
   filterName?: FilterType[];
   children: ReactNode;
 };
 
 // 1️⃣ **MovieList (Main Component)**
-function MovieList({ title, filterName = [], children }: MovieListProps) {
+function MovieList({ id, title, filterName = [], children }: MovieListProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataTrending, setDataTrending] = useState<Movie[]>([]);
   const [filterPick, setFilterPick] = useState<string>(
@@ -102,6 +104,7 @@ function MovieList({ title, filterName = [], children }: MovieListProps) {
         filterName,
         filterPick,
         setFilterPick,
+        id,
       }}
     >
       <div className="text-light-50 py-5 pl-5 lg:pl-10 w-auto h-full bg-scroller">
@@ -124,6 +127,7 @@ MovieList.Filter = function MovieListFilter() {
           filterName={context.filterName}
           activeFilter={context.filterPick}
           setActiveFilter={context.setFilterPick}
+          id={context.id}
         />
       )}
     </div>

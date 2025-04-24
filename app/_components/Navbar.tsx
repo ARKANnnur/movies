@@ -65,7 +65,7 @@ function Navbar() {
                 <Link href={"/"}>Movies</Link>
               </li>
               <li className="">
-                <Link href={"/recomendation?type=movie"}>Recomendation</Link>
+                <Link href={"/recommendation?type=movie"}>recommendation</Link>
               </li>
               <li className="">
                 <Link href={"/bookmark"}>Bookmark</Link>

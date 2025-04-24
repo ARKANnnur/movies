@@ -124,7 +124,7 @@ function SubBar({ id, season }: Props) {
   }, [bar, id]);
 
   return (
-    <div className="p-5 lg:pt-24 lg:p-0 flex-1 z-10 w-full">
+    <div className="p-5 lg:pt-24 lg:p-0 z-10 w-full lg:w-2/3">
       <div className="border glases border-white/10 rounded-lg p-2 flex flex-wrap gap-2 h-fit w-fit mb-2">
         <div
           onClick={() => setBar("episode")}

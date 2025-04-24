@@ -103,10 +103,16 @@ const sortByOptions: OptionType[] = [
 ];
 
 const releaseDateOptions: OptionType[] = [
+  { value: "2025", label: "2025" },
   { value: "2024", label: "2024" },
   { value: "2023", label: "2023" },
   { value: "2022", label: "2022" },
   { value: "2021", label: "2021" },
+  { value: "2020", label: "2020" },
+  { value: "2019", label: "2019" },
+  { value: "2018", label: "2018" },
+  { value: "2017", label: "2017" },
+  { value: "2016", label: "2016" },
 ];
 
 const ratingOptions: OptionType[] = [
@@ -216,6 +222,8 @@ function Page({}) {
   const [active, setActive] = useState<string | null>("movies");
   const [page, setPage] = useState<number>(1);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const params = new URLSearchParams(window.location.search);
+  const typeValue = params.get("type");
 
   const handleActive = (id: string, type: string) => {
     setActive(id);
@@ -309,7 +317,13 @@ function Page({}) {
     const parsed = cachedGenres ? JSON.parse(cachedGenres) : null;
 
     if (cachedGenres) {
-      const convertGenres = parsed.genreMovie.map(
+      const convertGenresMovies = parsed.genreMovie.map(
+        ({ id, name }: { id: number; name: string }) => ({
+          value: id,
+          label: name,
+        })
+      );
+      const convertGenresTv = parsed.genreTv.map(
         ({ id, name }: { id: number; name: string }) => ({
           value: id,
           label: name,
@@ -317,10 +331,12 @@ function Page({}) {
       );
       dispatch({
         type: "SET_GENRES",
-        payload: convertGenres,
+        payload: typeValue === "movie" ? convertGenresMovies : convertGenresTv,
       });
       dispatch({ type: "LOADING", payload: false });
-      console.log(convertGenres);
+      console.log(
+        typeValue === "movie" ? convertGenresMovies : convertGenresTv
+      );
       return;
     }
     async function getGenre() {
@@ -348,7 +364,7 @@ function Page({}) {
     }
 
     if (!cachedGenres) getGenre();
-  }, []);
+  }, [typeValue]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -371,7 +387,6 @@ function Page({}) {
 
         const data = await res.json();
         setDatas(page === 1 ? data : [...(datas || []), ...data]);
-        console.log(data);
       } catch (err) {
         console.log(err);
       } finally {

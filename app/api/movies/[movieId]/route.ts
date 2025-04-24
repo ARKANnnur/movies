@@ -9,29 +9,36 @@ export async function GET(
   const baseUrl = process.env.MOVIE_BASE_URL;
 
   try {
-    const [movieRes, castCrewRes, recommendationsRes] = await Promise.all([
-      fetch(`${baseUrl}/movie/${movieId}?language=en-US`, {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-      }),
-      fetch(`${baseUrl}/movie/${movieId}/credits?language=en-US`, {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-      }),
-      fetch(
-        `${baseUrl}/movie/${movieId}/recommendations?language=en-US&page=1`,
-        {
+    const [movieRes, castCrewRes, recommendationsRes, videos] =
+      await Promise.all([
+        fetch(`${baseUrl}/movie/${movieId}?language=en-US&include_video=true`, {
           headers: {
             accept: "application/json",
             Authorization: `Bearer ${apiKey}`,
           },
-        }
-      ),
-    ]);
+        }),
+        fetch(`${baseUrl}/movie/${movieId}/credits?language=en-US`, {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+        }),
+        fetch(
+          `${baseUrl}/movie/${movieId}/recommendations?language=en-US&page=1`,
+          {
+            headers: {
+              accept: "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+          }
+        ),
+        fetch(`${baseUrl}/movie/${movieId}/videos?language=en-US`, {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+        }),
+      ]);
 
     if (!movieRes.ok || !castCrewRes.ok || !recommendationsRes.ok) {
       throw new Error("Failed to fetch data from API");
@@ -40,6 +47,13 @@ export async function GET(
     const movieData = await movieRes.json();
     const castCrewData = await castCrewRes.json();
     const recommendationsData = await recommendationsRes.json();
+    const vidioLink = await videos.json();
+    const youtubeBaseUrl = "https://www.youtube.com/embed/";
+    const video = vidioLink.results.find(
+      (item: { site: string; type: string; key: any }) =>
+        item.site === "YouTube" && item.type === "Trailer" && item.key
+    );
+    const videoUrl = video ? youtubeBaseUrl + video.key : null;
 
     const director =
       castCrewData.crew.find(({ job }: { job: string }) => job === "Director")
@@ -78,6 +92,7 @@ export async function GET(
       director,
       cast: castFilter,
       recommendations: recommendationsFilter,
+      videoUrl: videoUrl,
     };
 
     return NextResponse.json(responseData);

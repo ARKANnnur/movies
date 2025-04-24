@@ -50,9 +50,9 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
                 <Image
                   src={`https://image.tmdb.org/t/p/w300${episode?.poster}`}
                   alt={episode.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
                   className="bg-center bg-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                 />
               </div>
               <div className="col-span-2 p-4 flex flex-col justify-between bg-gradient-to-r from-zinc-900 to-zinc-800/30 text-white overflow-y-auto scroll-thin overflow-x-hidden gap-y-2">
@@ -130,6 +130,7 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
                             alt={actor.name}
                             fill
                             className="rounded-full"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                           />
                         </div>
                       )}

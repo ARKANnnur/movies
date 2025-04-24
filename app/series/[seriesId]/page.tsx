@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { FaStar, FaRegCalendarAlt } from "react-icons/fa";
 import { FaClapperboard } from "react-icons/fa6";
-import Stars from "@/_components/StarRating";
 import BookmarkButton from "@/_components/BookmarkButton";
 import Genre from "@/_components/Genre";
 import SubBar from "@/_components/series/SubBar";
@@ -119,8 +118,7 @@ async function page({ params }: { params: { seriesId: string } }) {
             </div>
           </div>
           <div className="border glases border-white/10 w-full rounded-lg z-10 h-14 flex justify-center items-center gap-2">
-            <BookmarkButton />
-            <Stars />
+            <BookmarkButton data={series}/>
           </div>
           <Highlight highlight={series?.lastEps} />
         </div>
