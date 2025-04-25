@@ -95,6 +95,11 @@ const regionOptions: OptionType[] = [
   { value: "FR", label: "France" },
 ];
 
+const sortByType: OptionType[] = [
+  { value: "movie", label: "Movie" },
+  { value: "tv", label: "Series" },
+];
+
 const sortByOptions: OptionType[] = [
   { value: "popularity.asc", label: "Popularity Asc" },
   { value: "popularity.desc", label: "Popularity Desc" },
@@ -137,6 +142,7 @@ const studioOptions: OptionType[] = [
 // Definisi State
 interface FilterState {
   loading: boolean;
+  type: OptionType | null;
   region: OptionType | null;
   sortBy: OptionType | null;
   genres: OptionType[] | null;
@@ -150,6 +156,7 @@ interface FilterState {
 type FilterAction =
   | { type: "LOADING"; payload: boolean }
   | { type: "SET_REGION"; payload: OptionType | null }
+  | { type: "SET_TYPE"; payload: OptionType | null }
   | { type: "SET_SORT_BY"; payload: OptionType | null }
   | { type: "SET_GENRES"; payload: OptionType[] | null }
   | { type: "SET_SELECTED_GENRES"; payload: OptionType[] | null }
@@ -160,6 +167,7 @@ type FilterAction =
 
 type FilterActionType =
   | "SET_REGION"
+  | "SET_TYPE"
   | "SET_SORT_BY"
   | "SET_SELECTED_GENRES"
   | "SET_RELEASE_DATE"
@@ -174,6 +182,8 @@ const filterReducer = (
   switch (action.type) {
     case "LOADING":
       return { ...state, loading: action.payload };
+    case "SET_TYPE":
+      return { ...state, type: action.payload };
     case "SET_REGION":
       return { ...state, region: action.payload };
     case "SET_SORT_BY":
@@ -191,6 +201,7 @@ const filterReducer = (
     case "SET_RESET":
       return {
         ...state,
+        type: null,
         region: null,
         sortBy: null,
         genres: [],
@@ -209,6 +220,7 @@ function Page({}) {
   const [state, dispatch] = useReducer(filterReducer, {
     loading: false,
     region: null,
+    type: null,
     sortBy: null,
     selectedGenres: null,
     genres: [],
@@ -222,8 +234,6 @@ function Page({}) {
   const [active, setActive] = useState<string | null>("movies");
   const [page, setPage] = useState<number>(1);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const params = new URLSearchParams(window.location.search);
-  const typeValue = params.get("type");
 
   const handleActive = (id: string, type: string) => {
     setActive(id);
@@ -315,6 +325,8 @@ function Page({}) {
   useEffect(() => {
     const cachedGenres = localStorage.getItem("genres");
     const parsed = cachedGenres ? JSON.parse(cachedGenres) : null;
+    const params = new URLSearchParams(window.location.search);
+    const typeValue = params.get("type");
 
     if (cachedGenres) {
       const convertGenresMovies = parsed.genreMovie.map(
@@ -364,7 +376,7 @@ function Page({}) {
     }
 
     if (!cachedGenres) getGenre();
-  }, [typeValue]);
+  }, [refreshFilter]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -443,6 +455,24 @@ function Page({}) {
         </div>
         <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4">
           {/* Region */}
+          {active === 'cartoon' && (
+            <Select
+              className="min-w-[10rem] bg-filter text-light-50 rounded-md"
+              options={sortByType}
+              value={state.type}
+              onChange={(option) =>
+                handleSetFilterUrl(
+                  [option as OptionType],
+                  "SET_TYPE",
+                  "type"
+                )
+              }
+              placeholder="Type"
+              styles={customStyles}
+              menuPortalTarget={isMounted ? document.body : undefined}
+              menuPosition="fixed"
+            />
+          )}
           {showRegion && (
             <Select
               className="min-w-[10rem] bg-filter text-light-50 rounded-md"
