@@ -1,6 +1,6 @@
 "use client";
 
-import Card from "@/_components/Card";
+import CsrCard from "@/_components/CsrCard";
 import Sidebar from "@/_components/recommendations/SideBar";
 import Slider from "@/_components/Slider";
 import { customStyles, customStylesMultiple } from "@/_styles/Select";
@@ -584,7 +584,7 @@ function Page({}) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4">
             {datas?.map((data) => (
-              <Card
+              <CsrCard
                 item={data}
                 key={data.id}
                 parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"

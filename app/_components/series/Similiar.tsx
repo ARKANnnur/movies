@@ -1,6 +1,6 @@
 "use client";
 
-import Card from "@/_components/Card";
+import CsrCard from "@/_components/CsrCard";
 
 type Sim = {
   id: number;
@@ -24,7 +24,7 @@ const Similiar = ({ isLoading, similiar }: Props) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:pr-5 mb-5 overflow-y-auto max-h-[100dvh] scroll-thin">
           {similiar?.map((series) => (
-            <Card
+            <CsrCard
               item={series}
               key={series.id}
               parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"
