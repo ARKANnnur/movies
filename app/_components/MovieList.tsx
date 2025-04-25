@@ -7,7 +7,10 @@ import {
   useContext,
   ReactNode,
 } from "react";
-import Filter from "@/_components/Filter";
+import dynamic from "next/dynamic";
+const Filter = dynamic(() => import("@/_components/Filter"), {
+  ssr: false,
+});
 import Loading from "@/loading";
 import Image from "next/image";
 import Link from "next/link";
