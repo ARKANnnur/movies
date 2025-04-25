@@ -346,9 +346,7 @@ function Page({}) {
         payload: typeValue === "movie" ? convertGenresMovies : convertGenresTv,
       });
       dispatch({ type: "LOADING", payload: false });
-      console.log(
-        typeValue === "movie" ? convertGenresMovies : convertGenresTv
-      );
+
       return;
     }
     async function getGenre() {
@@ -455,17 +453,13 @@ function Page({}) {
         </div>
         <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4">
           {/* Region */}
-          {active === 'cartoon' && (
+          {active === "cartoon" && (
             <Select
               className="min-w-[10rem] bg-filter text-light-50 rounded-md"
               options={sortByType}
               value={state.type}
               onChange={(option) =>
-                handleSetFilterUrl(
-                  [option as OptionType],
-                  "SET_TYPE",
-                  "type"
-                )
+                handleSetFilterUrl([option as OptionType], "SET_TYPE", "type")
               }
               placeholder="Type"
               styles={customStyles}

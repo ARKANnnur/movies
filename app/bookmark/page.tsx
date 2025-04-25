@@ -15,7 +15,6 @@ function Page() {
   const [bookmarks, setBookmarks] = useState<any[]>([]);
   const [resfresh, setRefresh] = useState(false);
   const [show, setShow] = useState<boolean | Alert>(false);
-  console.log(show ? "benar" : "salah");
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
