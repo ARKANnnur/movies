@@ -67,7 +67,7 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
   const converType = number == 3 ? "movie" : "tv";
 
   let types: any;
-  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`;
+  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`; 
   else if (convertTitle === "Movie")
     types = `${API_URL}/trendingMovie?by=${filterPick}`;
   else if (convertTitle === "Series")

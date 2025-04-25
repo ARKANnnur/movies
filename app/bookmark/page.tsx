@@ -13,20 +13,18 @@ type Alert = {
 function Page() {
   const STORAGE_KEY = "myBookmarks";
   const [bookmarks, setBookmarks] = useState<any[]>([]);
-  const [resfresh, setRefresh] = useState(false);
   const [show, setShow] = useState<boolean | Alert>(false);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     setBookmarks(stored);
-  }, [resfresh]);
+  }, []);
 
   const deleteBookmark = (id: string) => {
     const updated = bookmarks.filter((data) => data.id !== id);
     setBookmarks(updated);
-    setRefresh((ref) => !ref);
-    setShow(false);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    setShow(false);
   };
 
   return (
