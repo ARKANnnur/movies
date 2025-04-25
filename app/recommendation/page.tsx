@@ -282,7 +282,7 @@ function Page({}) {
       const selected = options as OptionType[];
       dispatch({ type: settings, payload: selected });
 
-      const query = selected.map((g) => g.value).join(",");
+      const query = selected?.map((g) => g.value).join(",");
       const params = new URLSearchParams(window.location.search);
 
       if (query) {
@@ -329,13 +329,13 @@ function Page({}) {
     const typeValue = params.get("type");
 
     if (cachedGenres) {
-      const convertGenresMovies = parsed.genreMovie.map(
+      const convertGenresMovies = parsed.genreMovie?.map(
         ({ id, name }: { id: number; name: string }) => ({
           value: id,
           label: name,
         })
       );
-      const convertGenresTv = parsed.genreTv.map(
+      const convertGenresTv = parsed.genreTv?.map(
         ({ id, name }: { id: number; name: string }) => ({
           value: id,
           label: name,

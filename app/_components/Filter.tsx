@@ -15,11 +15,8 @@ type Props = {
 
 function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
   return (
-    <div
-      className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap relative overflow-hidden"
-      key={id}
-    >
-      {filterName?.map((filter, index) => {
+    <div className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap relative overflow-hidden">
+      {filterName?.map((filter) => {
         const isActive = activeFilter === filter?.code;
 
         return (
