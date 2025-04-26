@@ -465,6 +465,7 @@ function Page({}) {
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
+              id="cartoon-type-select"
             />
           )}
           {showRegion && (
@@ -483,6 +484,7 @@ function Page({}) {
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
+              id="region-select"
             />
           )}
 
@@ -502,6 +504,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="sort-by-select" 
           />
 
           {/* Genres (Multiple) */}
@@ -522,6 +525,7 @@ function Page({}) {
             styles={customStylesMultiple}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="genres-select"
           />
 
           {/* Release Date */}
@@ -540,6 +544,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="release-date-select"
           />
 
           {/* Rating */}
@@ -554,6 +559,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="rating-select"
           />
 
           {/* Studio */}
@@ -568,6 +574,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="studio-select"
           />
 
           <button

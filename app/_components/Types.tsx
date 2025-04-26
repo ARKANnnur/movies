@@ -21,7 +21,7 @@ function Types({
   size?: string;
 }) {
   return (
-    <div className={parentSize}>
+    <div className={parentSize} id={id} key={id}>
       <MovieList id={id} title={title} filterName={filterName}>
         <MovieList.Filter />
         <MovieList.List>
