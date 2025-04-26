@@ -1,6 +1,6 @@
 "use client";
 
-import Card from "@/_components/Card";
+import CsrCard from "@/_components/CsrCard";
 import Sidebar from "@/_components/recommendations/SideBar";
 import Slider from "@/_components/Slider";
 import { customStyles, customStylesMultiple } from "@/_styles/Select";
@@ -282,7 +282,7 @@ function Page({}) {
       const selected = options as OptionType[];
       dispatch({ type: settings, payload: selected });
 
-      const query = selected.map((g) => g.value).join(",");
+      const query = selected?.map((g) => g.value).join(",");
       const params = new URLSearchParams(window.location.search);
 
       if (query) {
@@ -329,13 +329,13 @@ function Page({}) {
     const typeValue = params.get("type");
 
     if (cachedGenres) {
-      const convertGenresMovies = parsed.genreMovie.map(
+      const convertGenresMovies = parsed.genreMovie?.map(
         ({ id, name }: { id: number; name: string }) => ({
           value: id,
           label: name,
         })
       );
-      const convertGenresTv = parsed.genreTv.map(
+      const convertGenresTv = parsed.genreTv?.map(
         ({ id, name }: { id: number; name: string }) => ({
           value: id,
           label: name,
@@ -346,9 +346,7 @@ function Page({}) {
         payload: typeValue === "movie" ? convertGenresMovies : convertGenresTv,
       });
       dispatch({ type: "LOADING", payload: false });
-      console.log(
-        typeValue === "movie" ? convertGenresMovies : convertGenresTv
-      );
+
       return;
     }
     async function getGenre() {
@@ -455,22 +453,19 @@ function Page({}) {
         </div>
         <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4">
           {/* Region */}
-          {active === 'cartoon' && (
+          {active === "cartoon" && (
             <Select
               className="min-w-[10rem] bg-filter text-light-50 rounded-md"
               options={sortByType}
               value={state.type}
               onChange={(option) =>
-                handleSetFilterUrl(
-                  [option as OptionType],
-                  "SET_TYPE",
-                  "type"
-                )
+                handleSetFilterUrl([option as OptionType], "SET_TYPE", "type")
               }
               placeholder="Type"
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
+              id="cartoon-type-select"
             />
           )}
           {showRegion && (
@@ -489,6 +484,7 @@ function Page({}) {
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
+              id="region-select"
             />
           )}
 
@@ -508,6 +504,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="sort-by-select" 
           />
 
           {/* Genres (Multiple) */}
@@ -528,6 +525,7 @@ function Page({}) {
             styles={customStylesMultiple}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="genres-select"
           />
 
           {/* Release Date */}
@@ -546,6 +544,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="release-date-select"
           />
 
           {/* Rating */}
@@ -560,6 +559,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="rating-select"
           />
 
           {/* Studio */}
@@ -574,6 +574,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
+            id="studio-select"
           />
 
           <button
@@ -590,7 +591,7 @@ function Page({}) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4">
             {datas?.map((data) => (
-              <Card
+              <CsrCard
                 item={data}
                 key={data.id}
                 parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"

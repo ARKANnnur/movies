@@ -79,6 +79,8 @@ export default function Search() {
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setIsOpen(true)}
         value={search}
+        id="search"
+        name="search"
       />
 
       {isOpen && (

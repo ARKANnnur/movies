@@ -7,7 +7,10 @@ import {
   useContext,
   ReactNode,
 } from "react";
-import Filter from "@/_components/Filter";
+import dynamic from "next/dynamic";
+const Filter = dynamic(() => import("@/_components/Filter"), {
+  ssr: false,
+});
 import Loading from "@/loading";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,7 +70,7 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
   const converType = number == 3 ? "movie" : "tv";
 
   let types: any;
-  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`;
+  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`; 
   else if (convertTitle === "Movie")
     types = `${API_URL}/trendingMovie?by=${filterPick}`;
   else if (convertTitle === "Series")
