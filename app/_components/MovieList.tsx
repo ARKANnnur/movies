@@ -17,6 +17,7 @@ import Link from "next/link";
 import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import textLimit from "@/_utils/textLimit";
+import { useMounted } from "@/_utils/useMounted";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -57,6 +58,7 @@ type MovieListProps = {
 
 // 1️⃣ **MovieList (Main Component)**
 function MovieList({ id, title, filterName = [], children }: MovieListProps) {
+  const mounted = useMounted();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataTrending, setDataTrending] = useState<Movie[]>([]);
   const [filterPick, setFilterPick] = useState<string>(
@@ -70,7 +72,7 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
   const converType = number == 3 ? "movie" : "tv";
 
   let types: any;
-  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`; 
+  if (!convertTitle) types = `${API_URL}/homeFilter?by=${filterPick}`;
   else if (convertTitle === "Movie")
     types = `${API_URL}/trendingMovie?by=${filterPick}`;
   else if (convertTitle === "Series")
@@ -97,6 +99,10 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterPick, types]
   );
+  if (!mounted) {
+    console.log("not CSR");
+    return null;
+  }
 
   return (
     <MovieListContext.Provider
@@ -145,9 +151,10 @@ MovieList.List = function MovieListList({ children }: { children: ReactNode }) {
   return (
     <div
       className={`flex flex-nowrap gap-5 mt-5 w-auto relative min-h-full ${
-        !context.isLoading ?
-        "overflow-x-scroll scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]"
-      : 'translate-y-20'}`}
+        !context.isLoading
+          ? "overflow-x-scroll scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]"
+          : "translate-y-20"
+      }`}
     >
       {context.isLoading ? <Loading /> : children}
     </div>

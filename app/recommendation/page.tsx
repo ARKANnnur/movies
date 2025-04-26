@@ -4,6 +4,7 @@ import CsrCard from "@/_components/CsrCard";
 import Sidebar from "@/_components/recommendations/SideBar";
 import Slider from "@/_components/Slider";
 import { customStyles, customStylesMultiple } from "@/_styles/Select";
+import { useMounted } from "@/_utils/useMounted";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { FaArrowDown } from "react-icons/fa6";
@@ -216,6 +217,7 @@ const filterReducer = (
 };
 
 function Page({}) {
+  const mounted = useMounted();
   const router = useRouter();
   const [state, dispatch] = useReducer(filterReducer, {
     loading: false,
@@ -441,6 +443,11 @@ function Page({}) {
     active !== "bollywood" &&
     active !== "chinese" &&
     active !== "indonesian";
+
+  if (!mounted) {
+    console.log("not CSR");
+    return null;
+  }
 
   return (
     <div className="flex lg:justify-between pt-24 px-4 lg:gap-5 sm:px-10 min-h-[200dvh] relative">

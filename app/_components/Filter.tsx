@@ -48,7 +48,7 @@ function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
             {filter?.name}
           </div>
         );
-      }) || null}
+      })}
     </div>
   );
 }

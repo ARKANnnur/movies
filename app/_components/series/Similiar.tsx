@@ -1,6 +1,7 @@
 "use client";
 
 import CsrCard from "@/_components/CsrCard";
+import { useMounted } from "@/_utils/useMounted";
 
 type Sim = {
   id: number;
@@ -15,6 +16,12 @@ type Sim = {
 type Props = { isLoading: boolean; similiar: Sim[] };
 
 const Similiar = ({ isLoading, similiar }: Props) => {
+  const mounted = useMounted();
+  if (!mounted) {
+    console.log("not CSR");
+    return null;
+  }
+  
   return (
     <div className="min-w-dvw grow">
       {isLoading ? (
