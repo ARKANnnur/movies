@@ -127,7 +127,7 @@ MovieList.Filter = function MovieListFilter() {
       {context.title && <h2>{context.title}</h2>}
       {!!context.filterName?.length && (
         <Filter
-          filterName={context.filterName}
+          filterName={context.filterName || []}
           activeFilter={context.filterPick}
           setActiveFilter={context.setFilterPick}
           id={context.id}
