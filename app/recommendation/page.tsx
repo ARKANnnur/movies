@@ -451,7 +451,7 @@ function Page({}) {
         <div className="rounded-xl overflow-hidden h-[50dvh]">
           <Slider size="h-[50dvh] rounded-xl" recomemendation={true} />
         </div>
-        <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4">
+        <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4 scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]">
           {/* Region */}
           {active === "cartoon" && (
             <Select
@@ -465,7 +465,7 @@ function Page({}) {
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
-              id="cartoon-type-select"
+              instanceId="type-select"
             />
           )}
           {showRegion && (
@@ -484,7 +484,7 @@ function Page({}) {
               styles={customStyles}
               menuPortalTarget={isMounted ? document.body : undefined}
               menuPosition="fixed"
-              id="region-select"
+              instanceId="region-select"
             />
           )}
 
@@ -504,7 +504,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
-            id="sort-by-select" 
+            instanceId="sort-select"
           />
 
           {/* Genres (Multiple) */}
@@ -525,7 +525,7 @@ function Page({}) {
             styles={customStylesMultiple}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
-            id="genres-select"
+            instanceId="genres-select"
           />
 
           {/* Release Date */}
@@ -544,7 +544,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
-            id="release-date-select"
+            instanceId="release-date-select"
           />
 
           {/* Rating */}
@@ -559,7 +559,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
-            id="rating-select"
+            instanceId="rating-select"
           />
 
           {/* Studio */}
@@ -574,7 +574,7 @@ function Page({}) {
             styles={customStyles}
             menuPortalTarget={isMounted ? document.body : undefined}
             menuPosition="fixed"
-            id="studio-select"
+            instanceId="studio-select"
           />
 
           <button
@@ -590,14 +590,20 @@ function Page({}) {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 my-4">
-            {datas?.map((data) => (
-              <CsrCard
-                item={data}
-                key={data.id}
-                parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"
-                size="h-[20rem] md:h-[28rem] lg:h-[20rem]"
-              />
-            ))}
+            {datas && datas.length > 0 ? (
+              datas.map((data) => (
+                <CsrCard
+                  item={data}
+                  key={data.id}
+                  parentSize="h-[24rem] md:h-[30rem] lg:h-[24rem]"
+                  size="h-[20rem] md:h-[28rem] lg:h-[20rem]"
+                />
+              ))
+            ) : (
+              <div className="text-center text-white/60 py-10">
+                Movies/Series Not Found
+              </div>
+            )}
           </div>
         )}
         {!state?.loading && (
