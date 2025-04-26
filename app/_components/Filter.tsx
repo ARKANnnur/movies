@@ -38,7 +38,7 @@ function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
           >
             {isActive && (
               <motion.div
-                layoutId={`filter-highlight-${id}`}
+                layoutId={`filter-highlight-${id}-${filter?.code}`}
                 className="absolute inset-0 bg-opt-gradient rounded-full z-[-1] border scale-105"
                 transition={{
                   type: "spring",

@@ -74,7 +74,7 @@ export default function Pagination({}: Props) {
   }
 
   if (!mounted) {
-    console.log("MovieList");
+    console.log("Pagination");
     return null;
   }
 
@@ -83,14 +83,14 @@ export default function Pagination({}: Props) {
       {currentData?.map((data) =>
         data.filterBy && data.title ? (
           <Types
-            key={data.filterBy[0].name}
+            key={`${data.id}-${data.filterBy[0].name}`}
             filterName={data.filterBy}
             title={data.title}
             id={data.id}
           />
         ) : data.filterBy ? (
           <Types
-            key={data.filterBy[0].name}
+            key={`${data.id}-${data.filterBy[0].name}`}
             filterName={data.filterBy}
             id={data.id}
           />
