@@ -27,7 +27,7 @@ export default function VideoPlayer({ video }: { video: string }) {
                 className="absolute inset-0 w-full h-full"
               >
                 <defs>
-                  <mask id="mask-cutout">
+                  <mask id="mask-cutout" maskUnits="userSpaceOnUse">
                     <rect width="100" height="100" fill="white" />
                     <path d="M40 30 L70 50 L40 70 Z" fill="black" />
                   </mask>

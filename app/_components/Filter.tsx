@@ -1,5 +1,4 @@
 "use client";
-import { useMounted } from "@/_utils/useMounted";
 import { motion } from "framer-motion";
 
 type filterCode = {
@@ -15,12 +14,6 @@ type Props = {
 };
 
 function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
-  const mounted = useMounted();
-  if (!mounted) {
-    console.log("Filter");
-    return null;
-  }
-
   return (
     <div className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap relative overflow-hidden">
       {filterName?.map((filter) => {

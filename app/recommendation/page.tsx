@@ -4,7 +4,6 @@ import CsrCard from "@/_components/CsrCard";
 import Sidebar from "@/_components/recommendations/SideBar";
 import Slider from "@/_components/Slider";
 import { customStyles, customStylesMultiple } from "@/_styles/Select";
-import { useMounted } from "@/_utils/useMounted";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { FaArrowDown } from "react-icons/fa6";
@@ -217,7 +216,6 @@ const filterReducer = (
 };
 
 function Page({}) {
-  const mounted = useMounted();
   const router = useRouter();
   const [state, dispatch] = useReducer(filterReducer, {
     loading: false,
@@ -444,11 +442,6 @@ function Page({}) {
     active !== "chinese" &&
     active !== "indonesian";
 
-  if (!mounted) {
-    console.log("not CSR");
-    return null;
-  }
-
   return (
     <div className="flex lg:justify-between pt-24 px-4 lg:gap-5 sm:px-10 min-h-[200dvh] relative">
       <div>
@@ -458,7 +451,7 @@ function Page({}) {
         <div className="rounded-xl overflow-hidden h-[50dvh]">
           <Slider size="h-[50dvh] rounded-xl" recomemendation={true} />
         </div>
-        <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4 scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]">
+        <div className="flex overflow-x-auto flex-nowrap sm:items-start sm:flex-wrap mt-4 gap-4 scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D] pb-1">
           {/* Region */}
           {active === "cartoon" && (
             <Select

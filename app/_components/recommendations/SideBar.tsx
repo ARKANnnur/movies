@@ -62,7 +62,7 @@ function SideBar({
     <>
       <div className="fixed top-2 left-2 bg-light-400/10 p-2 rounded-full border-b-[1px] border-light-50/10 bg-blend-saturation backdrop-blur-md z-40 mt-24 mx-4 sm:mx-10 lg:hidden">
         <IoHomeSharp
-          className="text-light-500 cursor-pointer"
+          className="text-light-500 cursor-pointer size-5"
           onClick={() => setShow((prev) => !prev)}
         />
       </div>
@@ -87,7 +87,10 @@ function SideBar({
               key={item.id}
               item={item}
               isActive={active === item.id}
-              onClick={() => handleActive(item.id, item.type)}
+              onClick={() => {
+                handleActive(item.id, item.type);
+                setShow((prev) => !prev);
+              }}
             />
           ))}
         </ul>
@@ -102,7 +105,10 @@ function SideBar({
               key={item.id}
               item={item}
               isActive={active === item.id}
-              onClick={() => handleActive(item.id, item.type)}
+              onClick={() => {
+                handleActive(item.id, item.type);
+                setShow((prev) => !prev);
+              }}
             />
           ))}
         </ul>

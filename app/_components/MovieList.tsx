@@ -17,7 +17,6 @@ import Link from "next/link";
 import Genre from "./Genre";
 import { FaStar } from "react-icons/fa";
 import textLimit from "@/_utils/textLimit";
-import { useMounted } from "@/_utils/useMounted";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -58,7 +57,6 @@ type MovieListProps = {
 
 // 1️⃣ **MovieList (Main Component)**
 function MovieList({ id, title, filterName = [], children }: MovieListProps) {
-  const mounted = useMounted();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataTrending, setDataTrending] = useState<Movie[]>([]);
   const [filterPick, setFilterPick] = useState<string>(
@@ -99,10 +97,6 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterPick, types]
   );
-  if (!mounted) {
-    console.log("MovieList");
-    return null;
-  }
 
   return (
     <MovieListContext.Provider
@@ -116,7 +110,10 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
         id,
       }}
     >
-      <div className="text-light-50 py-5 pl-5 lg:pl-10 w-auto h-full bg-scroller">
+      <div
+        className="text-light-50 py-5 pl-5 lg:pl-10 w-auto h-full bg-scroller"
+        key={`${id}-${title}-random`}
+      >
         {children}
       </div>
     </MovieListContext.Provider>

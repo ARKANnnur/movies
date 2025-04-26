@@ -84,7 +84,7 @@ export default function Search() {
       />
 
       {isOpen && (
-        <div className="w-full absolute shadow-xl bg-dark-100 rounded-b-sm">
+        <div className="w-[90dvw] sm:w-[50dvw] xl:w-full absolute shadow-xl bg-dark-100 rounded-b-sm">
           <ul className="relative overflow-y-scroll max-h-[400px]">
             {isLoading ? (
               <Loading />
@@ -136,7 +136,7 @@ export default function Search() {
             )}
           </ul>
 
-          {/* Tombol Load More */}
+          {/* Button Load More */}
           {filteredData.length < searchData.length && search && (
             <button
               className="w-full py-2 text-center bg-gray-800 text-white hover:bg-gray-700"

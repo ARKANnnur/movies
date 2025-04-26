@@ -1,7 +1,6 @@
 "use client";
 
 import CsrCard from "@/_components/CsrCard";
-import { useMounted } from "@/_utils/useMounted";
 
 type Recomend = {
   id: number;
@@ -16,12 +15,6 @@ type Recomend = {
 type Props = { isLoading: boolean; recomend: Recomend[] };
 
 const Recommendations = ({ isLoading, recomend }: Props) => {
-  const mounted = useMounted();
-  if (!mounted) {
-    console.log("not CSR");
-    return null;
-  }
-
   if (!isLoading && recomend.length === 0) {
     return (
       <div className="min-w-dvw grow flex justify-center items-center h-[30vh]">
