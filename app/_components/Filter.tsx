@@ -1,6 +1,6 @@
 "use client";
+import { useMounted } from "@/_utils/useMounted";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 type filterCode = {
   code?: string;
@@ -15,11 +15,14 @@ type Props = {
 };
 
 function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => setIsClient(true), []);
+  const mounted = useMounted();
+  if (!mounted) {
+    console.log("Filter");
+    return null;
+  }
 
   return (
-    <div className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap relative overflow-hidden" >
+    <div className="flex items-center h-full border rounded-full cursor-pointer bg-gradient text-sm sm:text-base text-nowrap relative overflow-hidden">
       {filterName?.map((filter) => {
         const isActive = activeFilter === filter?.code;
 
@@ -33,7 +36,7 @@ function Filter({ id, filterName, activeFilter, setActiveFilter }: Props) {
                 : "py-1 px-5 text-light-50/70 hover:text-light-50 scale-105"
             }`}
           >
-            {isClient && isActive && (
+            {isActive && (
               <motion.div
                 layoutId={`filter-highlight-${id}`}
                 className="absolute inset-0 bg-opt-gradient rounded-full z-[-1] border scale-105"

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaArrowDown } from "react-icons/fa6";
 import Types from "./Types";
+import { useMounted } from "@/_utils/useMounted";
 
 type Props = {};
 
@@ -59,6 +60,7 @@ const dataPaginations = [
 const ITEMS_PER_PAGE = 2;
 
 export default function Pagination({}: Props) {
+    const mounted = useMounted();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState(
     dataPaginations.slice(0, ITEMS_PER_PAGE)
@@ -69,6 +71,11 @@ export default function Pagination({}: Props) {
     const newData = dataPaginations.slice(0, nextPage * ITEMS_PER_PAGE);
     setCurrentData(newData);
     setCurrentPage(nextPage);
+  }
+
+  if (!mounted) {
+    console.log("MovieList");
+    return null;
   }
 
   return (

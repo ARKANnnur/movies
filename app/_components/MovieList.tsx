@@ -100,7 +100,7 @@ function MovieList({ id, title, filterName = [], children }: MovieListProps) {
     [filterPick, types]
   );
   if (!mounted) {
-    console.log("not CSR");
+    console.log("MovieList");
     return null;
   }
 

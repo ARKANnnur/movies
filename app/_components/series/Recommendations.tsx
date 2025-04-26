@@ -22,6 +22,14 @@ const Recommendations = ({ isLoading, recomend }: Props) => {
     return null;
   }
 
+  if (!isLoading && recomend.length === 0) {
+    return (
+      <div className="min-w-dvw grow flex justify-center items-center h-[30vh]">
+        <p className="text-lg font-semibold">Movies/Series not found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-w-dvw grow">
       {isLoading ? (
