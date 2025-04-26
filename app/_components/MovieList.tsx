@@ -142,9 +142,9 @@ MovieList.List = function MovieListList({ children }: { children: ReactNode }) {
   return (
     <div
       className={`flex flex-nowrap gap-5 mt-5 w-auto relative min-h-full ${
-        !context.isLoading &&
+        !context.isLoading ?
         "overflow-x-scroll scrollbar-thin scrollbar-thumb-[#B3B3B3] scrollbar-track-[#1C1B1D]"
-      }`}
+      : 'translate-y-20'}`}
     >
       {context.isLoading ? <Loading /> : children}
     </div>
