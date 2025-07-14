@@ -1,7 +1,7 @@
 # 🎬 Movie & Series Explorer
 ## Welcome to Movie & Series Explorer — your place to search, discover, and bookmark your favorite movies and TV series! 🚀
 
-### This project is powered by TMDb API, offering a clean and modern way to find what you want to watch next.
+### This project using TMDb API, offering a clean and modern way to find what you want to watch next.
 
 ## ✨ Features
 - 🔎 Search Movies & Series
